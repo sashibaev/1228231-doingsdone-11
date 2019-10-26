@@ -137,23 +137,14 @@ $show_complete_tasks = rand(0, 1);
                         <?php if ($val["Выполнен"] === "true" and $show_complete_tasks === 0) {
                                    continue;  
                                 } 
-                        ?>    
-                                             
+                        ?>                                                 
                         <?php if ($val["Выполнен"] === "true"): ?>                                                 
-                            <tr class="tasks__item task task--completed">                              
-                                <td class="task__select">
-                                    <label class="checkbox task__checkbox">
-                                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                                        <span class="checkbox__text"><?=$val["Задача"]; ?></span>
-                                    </label>
-                                </td>
-
-                                <td class="task__date"><?=$val["Дата выполнения"]; ?></td>
-                            </tr>
-                        <?php endif; ?> 
-
+                            <tr class="tasks__item task task--completed">
+                        <?php endif; ?>                                   
+                                
                         <?php if ($val["Выполнен"] === "false"): ?>                       
-                            <tr class="tasks__item task">                                                    
+                            <tr class="tasks__item task">
+                        <?php endif; ?>                                                    
                                 <td class="task__select">
                                     <label class="checkbox task__checkbox">
                                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
@@ -162,8 +153,7 @@ $show_complete_tasks = rand(0, 1);
                                 </td>
 
                                 <td class="task__date"><?=$val["Дата выполнения"]; ?></td>
-                            </tr>
-                        <?php endif; ?>  
+                            </tr>                          
                     <?php endforeach; ?>
                 </table>
             </main>
