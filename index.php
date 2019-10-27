@@ -40,17 +40,16 @@ $show_complete_tasks = rand(0, 1);
             <section class="content__side">
                 <h2 class="content__side-heading">Проекты</h2>
 
-                <nav class="main-navigation">
-                    
-                    <ul class="main-navigation__list">
-                        <?php 
-                            $massiv_proectov = ["Входящие" , "Учеба" , "Работа" , "Домашние дела" , "Авто"];
-                            foreach ($massiv_proectov as $key => $val):
-                        ?>
-                        <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#"><?=$massiv_proectov[$key]; ?></a>
-                            <span class="main-navigation__list-item-count">0</span>
-                        </li>
+                <nav class="main-navigation">                    
+                    <ul class="main-navigation__list">                        
+                        <?php
+                            $project_categories = ["Входящие" , "Учеба" , "Работа" , "Домашние дела" , "Авто"];     
+                        ?>                
+                        <?php foreach ($project_categories as $value): ?>
+                            <li class="main-navigation__list-item">
+                                <a class="main-navigation__list-item-link" href="#"><?=$value; ?></a>
+                                <span class="main-navigation__list-item-count">0</span>
+                            </li>
                         <?php endforeach; ?>
                     </ul>
                 </nav>
@@ -89,72 +88,71 @@ $show_complete_tasks = rand(0, 1);
 
                 <table class="tasks">
                     <?php
-                        $massiv_zadach = [
+                        $array_of_tasks = [
                             [
-                                "Задача" => "Собеседование в IT компании",
-                                "Дата выполнения" => "01.12.2019",
-                                "Категория" => "Работа",
-                                "Выполнен" => "false"
+                                "task" => "Собеседование в IT компании",
+                                "complition_date" => "01.12.2019",
+                                "category" => "Работа",
+                                "isCompleted" => false
                             ],
                             [
                                         
-                                "Задача" => "Выполнить тестовое задание",
-                                "Дата выполнения" => "25.12.2019",
-                                "Категория" => "Работа",
-                                "Выполнен" => "false"
+                                "task" => "Выполнить тестовое задание",
+                                "complition_date" => "25.12.2019",
+                                "category" => "Работа",
+                                "isCompleted" => false
                             ],
                             [
 
-                                "Задача" => "Сделать задание первого раздела",
-                                "Дата выполнения" => "21.12.2019",
-                                "Категория" => "Учеба",
-                                "Выполнен" => "true"
+                                "task" => "Сделать задание первого раздела",
+                                "complition_date" => "21.12.2019",
+                                "category" => "Учеба",
+                                "isCompleted" => true
                             ],
                             [
 
-                                "Задача" => "Встреча с другом",
-                                "Дата выполнения" => "22.12.2019",
-                                "Категория" => "Входящие",
-                                "Выполнен" => "false"
+                                "task" => "Встреча с другом",
+                                "complition_date" => "22.12.2019",
+                                "category" => "Входящие",
+                                "isCompleted" => false
                             ],
                             [ 
 
-                                "Задача" => "Купить корм для кота",
-                                "Дата выполнения" => null,
-                                "Категория" => "Домашние дела",
-                                "Выполнен" => "false"
+                                "task" => "Купить корм для кота",
+                                "complition_date" => null,
+                                "category" => "Домашние дела",
+                                "isCompleted" => false
                             ],
                             [
 
-                                "Задача" => "Заказать пиццу",
-                                "Дата выполнения" => null,
-                                "Категория" => "Домашние дела",
-                                "Выполнен" => "false"
+                                "task" => "Заказать пиццу",
+                                "complition_date" => null,
+                                "category" => "Домашние дела",
+                                "isCompleted" => false
                             ]  
                         ];                        
-                    ?>    
-                    <?php foreach ($massiv_zadach as $val): ?> 
-                        <?php if ($val["Выполнен"] === "true" and $show_complete_tasks === 0) {
+                    ?>   
+                     
+                    <?php foreach ($array_of_tasks as $val): ?> 
+                        <?php if ($val["isCompleted"] === true and $show_complete_tasks === 0) {
                                    continue;  
                                 } 
                         ?>                                                 
-                        <?php if ($val["Выполнен"] === "true"): ?>                                                 
-                            <tr class="tasks__item task task--completed">
-                        <?php endif; ?>                                   
-                                
-                        <?php if ($val["Выполнен"] === "false"): ?>                       
+                        <?php if ($val["isCompleted"] === true): ?>                                                 
+                            <tr class="tasks__item task task--completed">                                      
+                        <?php else: ?>                       
                             <tr class="tasks__item task">
-                        <?php endif; ?>                                                    
+                        <?php endif; ?>                                               
                                 <td class="task__select">
                                     <label class="checkbox task__checkbox">
                                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                                        <span class="checkbox__text"><?=$val["Задача"]; ?></span>
+                                        <span class="checkbox__text"><?=$val["task"]; ?></span>
                                     </label>
                                 </td>
-
-                                <td class="task__date"><?=$val["Дата выполнения"]; ?></td>
+                                <td class="task__date"><?=$val["complition_date"]; ?></td>
                             </tr>                          
                     <?php endforeach; ?>
+
                 </table>
             </main>
         </div>
