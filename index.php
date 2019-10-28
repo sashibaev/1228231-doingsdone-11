@@ -44,11 +44,75 @@ $show_complete_tasks = rand(0, 1);
                     <ul class="main-navigation__list">                        
                         <?php
                             $project_categories = ["Входящие" , "Учеба" , "Работа" , "Домашние дела" , "Авто"];     
-                        ?>                
-                        <?php foreach ($project_categories as $value): ?>
+                        ?>
+                        
+                        <?php
+                            $array_of_tasks = [
+                                [
+                                    "task" => "Собеседование в IT компании",
+                                    "complition_date" => "01.12.2019",
+                                    "category" => "Работа",
+                                    "is_completed" => false
+                                ],
+                                [
+                                        
+                                    "task" => "Выполнить тестовое задание",
+                                    "complition_date" => "25.12.2019",
+                                    "category" => "Работа",
+                                    "is_completed" => false
+                                ],
+                                [
+ 
+                                    "task" => "Сделать задание первого раздела",
+                                    "complition_date" => "21.12.2019",
+                                    "category" => "Учеба",
+                                    "is_completed" => true
+                                ],
+                                [
+
+                                    "task" => "Встреча с другом",
+                                    "complition_date" => "22.12.2019",
+                                    "category" => "Входящие",
+                                    "is_completed" => false
+                                ],
+                                [ 
+
+                                    "task" => "Купить корм для кота",
+                                    "complition_date" => null,
+                                    "category" => "Домашние дела",
+                                    "is_completed" => false
+                                ],
+                                [
+
+                                    "task" => "Заказать пиццу",
+                                    "complition_date" => null,
+                                    "category" => "Домашние дела",
+                                    "is_completed" => false
+                                ]  
+                            ];                        
+                        ?>
+                            
+                        <?php foreach ($project_categories as $value): ?>                             
                             <li class="main-navigation__list-item">
                                 <a class="main-navigation__list-item-link" href="#"><?=$value; ?></a>
-                                <span class="main-navigation__list-item-count">0</span>
+                                <span class="main-navigation__list-item-count">
+                                    <?php
+
+                                        $name_project = $value;
+                                        $quantity = 0; 
+                                   
+                                        
+                                        foreach ($array_of_tasks as $val) {
+                                            if ($val["category"] === $name_project) {
+                                                $quantity = $quantity + 1;
+                                            }                                                                              
+                                        } 
+                                      
+                                        
+                                        
+                                        echo $quantity;
+                                    ?>
+                                </span>
                             </li>
                         <?php endforeach; ?>
                     </ul>
@@ -87,58 +151,14 @@ $show_complete_tasks = rand(0, 1);
                 </div>
 
                 <table class="tasks">
-                    <?php
-                        $array_of_tasks = [
-                            [
-                                "task" => "Собеседование в IT компании",
-                                "complition_date" => "01.12.2019",
-                                "category" => "Работа",
-                                "isCompleted" => false
-                            ],
-                            [
-                                        
-                                "task" => "Выполнить тестовое задание",
-                                "complition_date" => "25.12.2019",
-                                "category" => "Работа",
-                                "isCompleted" => false
-                            ],
-                            [
-
-                                "task" => "Сделать задание первого раздела",
-                                "complition_date" => "21.12.2019",
-                                "category" => "Учеба",
-                                "isCompleted" => true
-                            ],
-                            [
-
-                                "task" => "Встреча с другом",
-                                "complition_date" => "22.12.2019",
-                                "category" => "Входящие",
-                                "isCompleted" => false
-                            ],
-                            [ 
-
-                                "task" => "Купить корм для кота",
-                                "complition_date" => null,
-                                "category" => "Домашние дела",
-                                "isCompleted" => false
-                            ],
-                            [
-
-                                "task" => "Заказать пиццу",
-                                "complition_date" => null,
-                                "category" => "Домашние дела",
-                                "isCompleted" => false
-                            ]  
-                        ];                        
-                    ?>   
+                   
                      
                     <?php foreach ($array_of_tasks as $val): ?> 
-                        <?php if ($val["isCompleted"] === true and $show_complete_tasks === 0) {
+                        <?php if ($val["is_completed"] === true and $show_complete_tasks === 0) {
                                    continue;  
                                 } 
                         ?>                                                 
-                        <?php if ($val["isCompleted"] === true): ?>                                                 
+                        <?php if ($val["is_completed"] === true): ?>                                                 
                             <tr class="tasks__item task task--completed">                                      
                         <?php else: ?>                       
                             <tr class="tasks__item task">
