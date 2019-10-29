@@ -47,7 +47,7 @@ $show_complete_tasks = rand(0, 1);
                         ?>
                         
                         <?php
-                            $array_of_tasks = [
+                            $tasks = [
                                 [
                                     "task" => "Собеседование в IT компании",
                                     "complition_date" => "01.12.2019",
@@ -92,26 +92,27 @@ $show_complete_tasks = rand(0, 1);
                             ];                        
                         ?>
                          
-                         <?php  function get_count_of_task ($array_of_tasks, $project_name) { 
+                        <?php  function get_count_of_task(array $tasks, string $project_name): int { 
                                     $count = 0;  
-                                    foreach ($array_of_tasks as $task) {
+                                    foreach ($tasks as $task) {
                                         if ($task["category"] === $project_name) {
-                                         $count++;
+                                            $count++;
                                         }                                                                                       
                                     } 
-                                     return $count;              
+
+                                    return $count;                                        
                                 } 
                         ?>                  
    
 
                         <?php foreach ($project_categories as $project_name): ?>                             
                             <li class="main-navigation__list-item">
+
                                 <a class="main-navigation__list-item-link" href="#"><?=$project_name; ?></a>
+
                                 <span class="main-navigation__list-item-count">
-                                    <?php                                      
-                                       
-                                        get_count_of_task ($array_of_tasks, $project_name);                          
-                                       
+                                    <?php                                                                              
+                                        echo get_count_of_task($tasks, $project_name);                          
                                     ?>
                                 </span>
                             </li>
@@ -156,7 +157,7 @@ $show_complete_tasks = rand(0, 1);
                 <table class="tasks">
                    
                      
-                    <?php foreach ($array_of_tasks as $val): ?> 
+                    <?php foreach ($tasks as $val): ?> 
                         <?php if ($val["is_completed"] === true and $show_complete_tasks === 0) {
                                    continue;  
                                 } 
