@@ -91,30 +91,33 @@ $show_complete_tasks = rand(0, 1);
                                 ]  
                             ];                        
                         ?>
-                            
-                        <?php foreach ($project_categories as $value): ?>                             
-                            <li class="main-navigation__list-item">
-                                <a class="main-navigation__list-item-link" href="#"><?=$value; ?></a>
-                                <span class="main-navigation__list-item-count">
-                                    <?php
+                         
+                         <?php  function get_count_of_task ($array_of_tasks, $project_name) { 
+                                    $count = 0;  
+                                    foreach ($array_of_tasks as $task) {
+                                        if ($task["category"] === $project_name) {
+                                         $count++;
+                                        }                                                                                       
+                                    } 
+                                     return $count;              
+                                } 
+                        ?>                  
+   
 
-                                        $name_project = $value;
-                                        $quantity = 0; 
-                                   
-                                        
-                                        foreach ($array_of_tasks as $val) {
-                                            if ($val["category"] === $name_project) {
-                                                $quantity = $quantity + 1;
-                                            }                                                                              
-                                        } 
-                                      
-                                        
-                                        
-                                        echo $quantity;
+                        <?php foreach ($project_categories as $project_name): ?>                             
+                            <li class="main-navigation__list-item">
+                                <a class="main-navigation__list-item-link" href="#"><?=$project_name; ?></a>
+                                <span class="main-navigation__list-item-count">
+                                    <?php                                      
+                                       
+                                        get_count_of_task ($array_of_tasks, $project_name);                          
+                                       
                                     ?>
                                 </span>
                             </li>
                         <?php endforeach; ?>
+
+                        
                     </ul>
                 </nav>
 
