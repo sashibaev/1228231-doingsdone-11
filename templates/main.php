@@ -1,3 +1,8 @@
+<?php
+// показывать или нет выполненные задачи
+$show_complete_tasks = rand(0, 1);
+?>
+ 
             <section class="content__side">
                 <h2 class="content__side-heading">Проекты</h2>
 
@@ -8,7 +13,7 @@
                         <?php foreach ($project_categories as $project_name): ?>                             
                             <li class="main-navigation__list-item">
 
-                                <a class="main-navigation__list-item-link" href="#"><?=$project_name; ?></a>
+                                <a class="main-navigation__list-item-link" href="#"><?=htmlspecialchars($project_name); ?></a>
 
                                 <span class="main-navigation__list-item-count">
                                     <?php                                                                              
@@ -70,13 +75,12 @@
                                 <td class="task__select">
                                     <label class="checkbox task__checkbox">
                                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                                        <span class="checkbox__text"><?=$val["task"]; ?></span>
+                                        <span class="checkbox__text"><?=htmlspecialchars($val["task"]); ?></span>
                                     </label>
                                 </td>
-                                <td class="task__date"><?=$val["complition_date"]; ?></td>
+                                <td class="task__date"><?=$val["completion_date"]; ?></td>
                             </tr>                          
                     <?php endforeach; ?>
 
                 </table>
             </main>
- 
