@@ -2,6 +2,9 @@
     include("helpers.php");
  
 
+    $show_complete_tasks = rand(0, 1);
+
+
     $project_categories = ["Входящие" , "Учеба" , "Работа" , "Домашние дела" , "Авто"];     
 
                         
@@ -64,7 +67,8 @@
 
     $page_content = include_template("main.php", [
         "project_categories" => $project_categories, 
-        "tasks" => $tasks
+        "tasks" => $tasks,
+        "show_complete_tasks" => $show_complete_tasks
     ]);
     
     $layout_content = include_template("layout.php", [
