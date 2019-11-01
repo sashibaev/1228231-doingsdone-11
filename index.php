@@ -1,12 +1,9 @@
  <?php
     include("helpers.php");
  
-
     $show_complete_tasks = rand(0, 1);
 
-
     $project_categories = ["Входящие" , "Учеба" , "Работа" , "Домашние дела" , "Авто"];     
-
                         
     $tasks = [
         [
@@ -51,7 +48,6 @@
             "is_completed" => false
         ]  
     ];                        
-
                          
     function get_count_of_task(array $tasks, string $project_name): int { 
         $count = 0;  
@@ -64,19 +60,15 @@
     } 
                  
     // задание 3 урок 2  работаем с датой
-
-    function data_task(array $tasks, $val): int {
-        $ts = time();       
+    function data_task(?string $val): int {      
         $sec_in_hour = 3600;         
-        $end_ts = strtotime($val["completion_date"]);       
-        $ts_diff = $end_ts - $ts;
-        $hours = floor($ts_diff / $sec_in_hour);
-                       
+        $end_ts = strtotime($val);       
+        $ts_diff = $end_ts - time();
+        $hours = floor($ts_diff / $sec_in_hour);                       
         return $hours; 
     }
     
     
-
     $page_content = include_template("main.php", [
         "project_categories" => $project_categories, 
         "tasks" => $tasks,

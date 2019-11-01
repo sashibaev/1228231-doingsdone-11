@@ -70,9 +70,8 @@
                             <tr class="tasks__item task">
                         <?php endif; ?> 
 
-                        <?php $hours = data_task($tasks, $val); ?>
-
-                        <?php if ($hours <= 24): ?>
+                        <?php $hours = data_task($val["completion_date"]);
+                        if ($hours <= 24): ?>
                             <tr class="task--important">
                         <?php endif; ?>     
 
