@@ -60,10 +60,22 @@
                 $count++;
             }                                                                                       
         } 
-        return $count;                                        
+        return $count;                                       
     } 
                  
- 
+    // задание 3 урок 2  работаем с датой
+
+    function data_task(array $tasks, $val): int {
+        $ts = time();       
+        $sec_in_hour = 3600;         
+        $end_ts = strtotime($val["completion_date"]);       
+        $ts_diff = $end_ts - $ts;
+        $hours = floor($ts_diff / $sec_in_hour);
+                       
+        return $hours; 
+    }
+    
+    
 
     $page_content = include_template("main.php", [
         "project_categories" => $project_categories, 

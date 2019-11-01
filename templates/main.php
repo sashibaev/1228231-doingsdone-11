@@ -13,7 +13,8 @@
 
                                 <span class="main-navigation__list-item-count">
                                     <?php                                                                              
-                                        echo get_count_of_task($tasks, $project_name);                          
+                                        echo get_count_of_task($tasks, $project_name);  
+
                                     ?>
                                 </span>
                             </li>
@@ -67,7 +68,14 @@
                             <tr class="tasks__item task task--completed">                                      
                         <?php else: ?>                       
                             <tr class="tasks__item task">
-                        <?php endif; ?>                                               
+                        <?php endif; ?> 
+
+                        <?php $hours = data_task($tasks, $val); ?>
+
+                        <?php if ($hours <= 24): ?>
+                            <tr class="task--important">
+                        <?php endif; ?>     
+
                                 <td class="task__select">
                                     <label class="checkbox task__checkbox">
                                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
