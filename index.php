@@ -60,7 +60,7 @@
     } 
                  
     // задание 3 урок 2  работаем с датой
-    function data_task(?string $val): int {      
+    function hours_before_data_task(?string $val): int {      
         $sec_in_hour = 3600;         
         $end_ts = strtotime($val);       
         $ts_diff = $end_ts - time();
