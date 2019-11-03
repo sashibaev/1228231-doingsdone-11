@@ -31,13 +31,3 @@ CREATE TABLE tasks(
     FOREIGN KEY (project_id)  REFERENCES projects (id)
 )
 
-
-ALTER TABLE projects
-ADD	FOREIGN KEY (user_id)  REFERENCES users (id);
-
-ALTER TABLE tasks
-ADD FOREIGN KEY (user_id) REFERENCES users (id);
-
-ALTER TABLE tasks
-ADD  FOREIGN KEY (project_id) REFERENCES projects (id);
-
