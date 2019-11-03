@@ -27,7 +27,7 @@ CREATE TABLE tasks(
     dt_term     TIMESTAMP,
     user_id     INT,
     project_id  INT,
-    FOREIGN KEY (user_id)  REFERENCES users (id)
+    FOREIGN KEY (user_id)  REFERENCES users (id),
     FOREIGN KEY (project_id)  REFERENCES projects (id)
 )
 
