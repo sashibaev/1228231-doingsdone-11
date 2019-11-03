@@ -15,7 +15,8 @@ CREATE TABLE users (
 CREATE TABLE projects(
 	id          INT AUTO_INCREMENT PRIMARY KEY,
 	name        VARCHAR(128) NOT NULL UNIQUE,
-	user_id     INT
+	user_id     INT,
+	FOREIGN KEY (user_id)  REFERENCES users (id)
 );
 
 CREATE TABLE tasks(
@@ -25,5 +26,18 @@ CREATE TABLE tasks(
     link        VARCHAR(128),
     dt_term     TIMESTAMP,
     user_id     INT,
-    projects_id INT
+    project_id  INT,
+    FOREIGN KEY (user_id)  REFERENCES users (id)
+    FOREIGN KEY (project_id)  REFERENCES projects (id)
 )
+
+
+ALTER TABLE projects
+ADD	FOREIGN KEY (user_id)  REFERENCES users (id);
+
+ALTER TABLE tasks
+ADD FOREIGN KEY (user_id) REFERENCES users (id);
+
+ALTER TABLE tasks
+ADD  FOREIGN KEY (project_id) REFERENCES projects (id);
+
