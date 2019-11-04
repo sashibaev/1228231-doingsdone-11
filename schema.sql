@@ -1,5 +1,4 @@
 CREATE DATABASE affairs_ok
-
 DEFAULT CHARACTER SET utf8mb4
 DEFAULT COLLATE utf8_general_ci;
 
