@@ -30,4 +30,4 @@ UPDATE tasks SET status = 1
 WHERE id = 1;
 
 UPDATE tasks SET name = "Обновление"
-WHERE id = 5 limit 1;
+WHERE id = 5;
