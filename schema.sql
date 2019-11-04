@@ -22,7 +22,7 @@ CREATE TABLE projects(
 CREATE TABLE tasks(
     id            INT AUTO_INCREMENT PRIMARY KEY,
     date_created  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status        INT,
+    status        INT NOT NULL,
     name          VARCHAR(128) NOT NULL, 
     link          VARCHAR(128),
     dt_term       TIMESTAMP,
