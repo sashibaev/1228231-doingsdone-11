@@ -5,12 +5,12 @@ DEFAULT COLLATE utf8_general_ci;
 USE affairs_ok;
 
 CREATE TABLE users (
-    id            INT AUTO_INCREMENT PRIMARY KEY,
-    dt_add        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    email         VARCHAR(128) NOT NULL UNIQUE,
-    name          VARCHAR(128) NOT NULL,
-    password      VARCHAR(64) NOT NULL
-    );
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    dt_add      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    email       VARCHAR(128) NOT NULL UNIQUE,
+    name        VARCHAR(128) NOT NULL,
+    password    VARCHAR(64) NOT NULL
+);
 
 CREATE TABLE projects(
 	id            INT AUTO_INCREMENT PRIMARY KEY,
@@ -31,4 +31,3 @@ CREATE TABLE tasks(
     FOREIGN KEY (user_id)  REFERENCES users (id),
     FOREIGN KEY (project_id)  REFERENCES projects (id)
 )
-
