@@ -10,7 +10,7 @@ CREATE TABLE users (
     email       VARCHAR(128) NOT NULL UNIQUE,
     name        VARCHAR(128) NOT NULL,
     password    VARCHAR(64) NOT NULL
-    );
+);
 
 CREATE TABLE projects(
 	id            INT AUTO_INCREMENT PRIMARY KEY,
@@ -31,5 +31,3 @@ CREATE TABLE tasks(
     FOREIGN KEY (user_id)  REFERENCES users (id),
     FOREIGN KEY (project_id)  REFERENCES projects (id)
 )
-
-
