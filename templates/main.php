@@ -9,7 +9,7 @@
                         <?php foreach ($project_categories as $project_name): ?>                             
                             <li class="main-navigation__list-item">
 
-                                <a class="main-navigation__list-item-link" href="#"><?=htmlspecialchars($project_name); ?></a>
+                                <a class="main-navigation__list-item-link" href="#"><?=htmlspecialchars($project_name)  ; ?></a>
 
                                 <span class="main-navigation__list-item-count">
                                     <?php                                                                              

@@ -2,9 +2,9 @@
     include("helpers.php");
  
     $show_complete_tasks = rand(0, 1);
-
+  
     $project_categories = ["Входящие" , "Учеба" , "Работа" , "Домашние дела" , "Авто"];     
-                        
+                     
     $tasks = [
         [
             "task" => "Собеседование в IT компании",
@@ -48,7 +48,8 @@
             "is_completed" => false
         ]  
     ];                        
-                         
+    
+
     function get_count_of_task(array $tasks, string $project_name): int { 
         $count = 0;  
         foreach ($tasks as $task) {
