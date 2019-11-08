@@ -53,6 +53,6 @@ INSERT INTO projects (name, user_id) VALUES ("Хобби", 3);
 /*Урок 5 задание 1, добавить 5 задач для нового пользователя */
 INSERT INTO tasks (status, name, dt_term, user_id, project_id) VALUES (0, "Разобрать шкаф","2019.11.23",3, 6);
 INSERT INTO tasks (status, name, dt_term, user_id, project_id) VALUES (0, "Почистить снег возле ворот","2019.12.05", 3, 6);
-INSERT INTO tasks (status, name, dt_term, user_id, project_id) VALUES (1, "Почистить монеты", "2019.11.06", 3, 7);
+INSERT INTO tasks (status, name, dt_term, user_id, project_id) VALUES (1, "Почистить монеты", "2019.12.06", 3, 7);
 INSERT INTO tasks (status, name, dt_term, user_id, project_id) VALUES (0, "Сходить в магазин монет", "2019.11.24", 3, 7);
 INSERT INTO tasks (status, name, dt_term, user_id, project_id) VALUES (0, "Встретиться с нумизматом", "2019.11.14", 3, 7);

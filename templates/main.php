@@ -6,10 +6,10 @@
                     <ul class="main-navigation__list">                        
                         
 
-                        <?php foreach ($project_categories as $project_name): ?>                             
+                        <?php foreach ($projects as $project_name): ?>                             
                             <li class="main-navigation__list-item">
 
-                                <a class="main-navigation__list-item-link" href="#"><?=htmlspecialchars($project_name)  ; ?></a>
+                                <a class="main-navigation__list-item-link" href="#"><?=htmlspecialchars($project_name["name"]); ?></a>
 
                                 <span class="main-navigation__list-item-count">
                                     <?php                                                                              
@@ -60,18 +60,18 @@
                    
                      
                     <?php foreach ($tasks as $val): ?> 
-                        <?php if ($val["is_completed"] === true and $show_complete_tasks === 0) {
+                        <?php if ($val["status"] == 1 and $show_complete_tasks === 0) {
                                    continue;  
                                 } 
                         ?>                                                 
-                        <?php if ($val["is_completed"] === true): ?>                                                 
+                        <?php if ($val["status"] == 1): ?>                                                 
                             <tr class="tasks__item task task--completed">                                      
                         <?php else: ?>                       
                             <tr class="tasks__item task">
                         <?php endif; ?> 
 
                         <?php 
-                            $hours = hours_before_data_task($val["completion_date"]);
+                            $hours = hours_before_data_task($val["dt_term"]);
                             if ($hours <= 24): 
                         ?>
                             <tr class="task--important">
@@ -80,10 +80,10 @@
                                 <td class="task__select">
                                     <label class="checkbox task__checkbox">
                                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                                        <span class="checkbox__text"><?=htmlspecialchars($val["task"]); ?></span>
+                                        <span class="checkbox__text"><?=htmlspecialchars($val["name"]); ?></span>
                                     </label>
                                 </td>
-                                <td class="task__date"><?=$val["completion_date"]; ?></td>
+                                <td class="task__date"><?=$val["dt_term"]; ?></td>
                             </tr>                          
                     <?php endforeach; ?>
 

@@ -2,58 +2,40 @@
     include("helpers.php");
  
     $show_complete_tasks = rand(0, 1);
-  
-    $project_categories = ["Входящие" , "Учеба" , "Работа" , "Домашние дела" , "Авто"];     
-                     
-    $tasks = [
-        [
-            "task" => "Собеседование в IT компании",
-            "completion_date" => "01.12.2019",
-            "category" => "Работа",
-            "is_completed" => false
-        ],
-        [
-                                        
-            "task" => "Выполнить тестовое задание",
-            "completion_date" => "25.12.2019",
-            "category" => "Работа",
-            "is_completed" => false
-        ],
-        [
-
-            "task" => "Сделать задание первого раздела",
-            "completion_date" => "21.12.2019",
-            "category" => "Учеба",
-            "is_completed" => true
-        ],
-        [
-
-            "task" => "Встреча с другом",
-            "completion_date" => "22.12.2019",
-            "category" => "Входящие",
-            "is_completed" => false
-        ],
-        [ 
-
-            "task" => "Купить корм для кота",
-            "completion_date" => null,
-            "category" => "Домашние дела",
-            "is_completed" => false
-        ],
-        [
-
-            "task" => "Заказать пиццу",
-            "completion_date" => null,
-            "category" => "Домашние дела",
-            "is_completed" => false
-        ]  
-    ];                        
+     
+    $con = mysqli_connect("localhost", "root", "", "affairs_ok" );
+     if($con == false) {
+        printf("Соединение не установлено",mysl_connect_error()); 
+        exit();   
+    }
+    mysqli_set_charset($con, "utf8");
     
+    $sql = "SELECT id, name FROM projects WHERE user_id = 3";
+    $res = mysqli_query($con, $sql);
 
-    function get_count_of_task(array $tasks, string $project_name): int { 
+    if (!$res) {
+        $error = mysqli_error($con);
+        printf("Ошибка MySQL: ". $error);
+    }
+     
+    $projects = mysqli_fetch_all($res, MYSQLI_ASSOC);
+    
+     
+    $sql = "SELECT * FROM tasks WHERE user_id = 3";
+    $result = mysqli_query($con, $sql);
+
+    if (!$result) {
+        $error = mysqli_error($con);
+        printf("Ошибка MySQL: ". $error);
+    }
+     
+    $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    
+    function get_count_of_task(array $tasks, $project_name): int { 
         $count = 0;  
         foreach ($tasks as $task) {
-            if ($task["category"] === $project_name) {
+            if ($task["project_id"] === $project_name["id"]) {
                 $count++;
             }                                                                                       
         } 
@@ -71,18 +53,20 @@
     
     
     $page_content = include_template("main.php", [
-        "project_categories" => $project_categories, 
+        "projects" => $projects,
         "tasks" => $tasks,
         "show_complete_tasks" => $show_complete_tasks
-    ]);
+    ]); 
     
     $layout_content = include_template("layout.php", [
         "content" => $page_content,
-        "user_name" => "Константин",
+        "user_name" => "Sergey",
         "title" => "Дела в порядке"
     ]);
+     
+      
 
-    print($layout_content);  
+    print($layout_content); 
 
 ?>                      
 
