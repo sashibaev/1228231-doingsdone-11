@@ -8,13 +8,17 @@
 
                         <?php foreach ($projects as $project_name): ?>                             
                             <li class="main-navigation__list-item">
-
-                                <a class="main-navigation__list-item-link" href="<?=$url . "id=" . $project_name["id"]; ?>"><?=htmlspecialchars($project_name["name"]); ?></a>
+                                
+                                <a class="main-navigation__list-item-link 
+                                    <?php if ($project_name["id"] === $ids): ?>
+                                        main-navigation__list-item--active
+                                    <?php endif; ?>"
+                                    href="<?=$url . "id=" . $project_name["id"]; ?>"><?=htmlspecialchars($project_name["name"]); ?>  
+                                </a>
 
                                 <span class="main-navigation__list-item-count">
-                                    <?php                                                                              
+                                    <?php                                                                             
                                         echo get_count_of_task($tasks, $project_name);  
-
                                     ?>
                                 </span>
                             </li>
