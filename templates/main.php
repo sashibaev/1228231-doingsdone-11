@@ -9,7 +9,7 @@
                         <?php foreach ($projects as $project_name): ?>                             
                             <li class="main-navigation__list-item">
 
-                                <a class="main-navigation__list-item-link" href="#"><?=htmlspecialchars($project_name["name"]); ?></a>
+                                <a class="main-navigation__list-item-link" href="<?=$url . "id=" . $project_name["id"]; ?>"><?=htmlspecialchars($project_name["name"]); ?></a>
 
                                 <span class="main-navigation__list-item-count">
                                     <?php                                                                              

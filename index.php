@@ -10,7 +10,7 @@
     }
     mysqli_set_charset($con, "utf8");
 
-    $sql = "SELECT id, name FROM projects WHERE user_id = 3";
+    $sql = "SELECT id, name FROM projects";
     $res = mysqli_query($con, $sql);
 
     if (!$res) {
@@ -20,8 +20,14 @@
 
     $projects = mysqli_fetch_all($res, MYSQLI_ASSOC);
 
+    //Для каждого пункта с названием проекта сформировать адрес ссылки, имя сценария и параметр запроса равного идентификатору проекта
+    $params = $_GET;
+    $scriptname = pathinfo(__FILE__, PATHINFO_BASENAME);
+    $query = http_build_query($params);
+    $url = "/" . $scriptname . "?";
 
-    $sql = "SELECT id, date_created, status, name, link, dt_term, user_id, project_id FROM tasks WHERE user_id = 3";
+
+    $sql = "SELECT id, date_created, status, name, link, dt_term, user_id, project_id FROM tasks";
     $result = mysqli_query($con, $sql);
 
     if (!$result) {
@@ -55,7 +61,8 @@
     $page_content = include_template("main.php", [
         "projects" => $projects,
         "tasks" => $tasks,
-        "show_complete_tasks" => $show_complete_tasks
+        "show_complete_tasks" => $show_complete_tasks,
+        "url" => $url
     ]);
 
     $layout_content = include_template("layout.php", [
