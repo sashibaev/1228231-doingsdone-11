@@ -5,7 +5,6 @@
                 <nav class="main-navigation">                    
                     <ul class="main-navigation__list">                        
                         
-
                         <?php foreach ($projects as $project_name): ?>                             
                             <li class="main-navigation__list-item">
                                 
@@ -17,14 +16,12 @@
                                 </a>
 
                                 <span class="main-navigation__list-item-count">
-                                    <?php                                                                             
+                                    <?php                                                                            
                                         echo get_count_of_task($tasks, $project_name);  
                                     ?>
                                 </span>
                             </li>
-                        <?php endforeach; ?>
-
-                        
+                        <?php endforeach; ?>                       
                     </ul>
                 </nav>
 
@@ -61,8 +58,7 @@
                 </div>
 
                 <table class="tasks">
-                   
-                     
+                                       
                     <?php foreach ($tasks as $val): ?> 
                         <?php if ($val["status"] == 1 and $show_complete_tasks === 0) {
                                    continue;  
@@ -72,23 +68,43 @@
                             <tr class="tasks__item task task--completed">                                      
                         <?php else: ?>                       
                             <tr class="tasks__item task">
-                        <?php endif; ?> 
+                        <?php endif; ?>
 
-                        <?php 
-                            $hours = hours_before_data_task($val["dt_term"]);
-                            if ($hours <= 24): 
-                        ?>
-                            <tr class="task--important">
-                        <?php endif; ?>     
+                        <?php if ($ids === NULL): ?> 
+                            <?php 
+                                    $hours = hours_before_data_task($val["dt_term"]);
+                                    if ($hours <= 24): 
+                                ?>
+                                    <tr class="task--important">
+                                <?php endif; ?>     
 
-                                <td class="task__select">
-                                    <label class="checkbox task__checkbox">
-                                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                                        <span class="checkbox__text"><?=htmlspecialchars($val["name"]); ?></span>
-                                    </label>
-                                </td>
-                                <td class="task__date"><?=$val["dt_term"]; ?></td>
-                            </tr>                          
+                                        <td class="task__select">
+                                            <label class="checkbox task__checkbox">
+                                                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
+                                                <span class="checkbox__text"><?=htmlspecialchars($val["name"]); ?></span>
+                                            </label>
+                                        </td>
+                                        <td class="task__date"><?=$val["dt_term"]; ?></td>
+                                </tr> 
+                        <?php endif; ?>
+
+                        <?php if($val["project_id"] === $ids): ?>
+                            <?php 
+                                $hours = hours_before_data_task($val["dt_term"]);
+                                if ($hours <= 24): 
+                            ?>
+                                <tr class="task--important">
+                            <?php endif; ?>     
+
+                                    <td class="task__select">
+                                        <label class="checkbox task__checkbox">
+                                            <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
+                                            <span class="checkbox__text"><?=htmlspecialchars($val["name"]); ?></span>
+                                        </label>
+                                    </td>
+                                    <td class="task__date"><?=$val["dt_term"]; ?></td>
+                                </tr> 
+                        <?php endif; ?>                         
                     <?php endforeach; ?>
 
                 </table>

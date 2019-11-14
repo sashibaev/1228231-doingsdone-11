@@ -25,9 +25,22 @@
     $scriptname = pathinfo(__FILE__, PATHINFO_BASENAME);
     $query = http_build_query($params);
     $url = "/" . $scriptname . "?";
-    //В меню активный проект надо визуально выделить
-    $ids = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
 
+    
+    if (isset($_GET["id"])) {
+        $ids = 0;       
+        foreach($projects as $key => $value){
+           $ids .= in_array($_GET["id"], $value);             
+        }
+        if ($ids) {
+           $ids = $_GET["id"];
+        }       
+        else 
+          print"Ошибка, 404";
+    }              
+    else {
+        $ids = NULL;
+    }
 
     $sql = "SELECT id, date_created, status, name, link, dt_term, user_id, project_id FROM tasks";
     $result = mysqli_query($con, $sql);
