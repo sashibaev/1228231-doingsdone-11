@@ -21,38 +21,42 @@
     $projects = mysqli_fetch_all($res, MYSQLI_ASSOC);
 
     //Для каждого пункта с названием проекта сформировать адрес ссылки, имя сценария и параметр запроса равного идентификатору проекта
-    $params = $_GET;
     $scriptname = pathinfo(__FILE__, PATHINFO_BASENAME);
-    $query = http_build_query($params);
     $url = "/" . $scriptname . "?";
-
     
     if (isset($_GET["id"])) {
+        $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
         $ids = 0;       
-        foreach($projects as $key => $value){
-           $ids .= in_array($_GET["id"], $value);             
+        foreach($projects as $value){
+            $ids .= in_array($id, $value);             
         }
         if ($ids) {
-           $ids = $_GET["id"];
+            $ids = $id; 
+        }
+        else  {
+            print"Ошибка, 404";
         }       
-        else 
-          print"Ошибка, 404";
-    }              
+           
+        $sql = "SELECT id, date_created, status, name, link, dt_term, user_id, project_id FROM tasks WHERE 
+        project_id = $ids";
+        $result = mysqli_query($con, $sql);        
+        if (!$result) {
+            $error = mysqli_error($con);
+            printf("Ошибка MySQL: ". $error);
+        }
+        $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);    
+    }   
+         
     else {
-        $ids = NULL;
+        $sql = "SELECT id, date_created, status, name, link, dt_term, user_id, project_id FROM tasks";
+        $result = mysqli_query($con, $sql);        
+        if (!$result) {
+            $error = mysqli_error($con);
+            printf("Ошибка MySQL: ". $error);
+        }
+        $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
-
-    $sql = "SELECT id, date_created, status, name, link, dt_term, user_id, project_id FROM tasks";
-    $result = mysqli_query($con, $sql);
-
-    if (!$result) {
-        $error = mysqli_error($con);
-        printf("Ошибка MySQL: ". $error);
-    }
-
-    $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-
+      
     function get_count_of_task(array $tasks, $project_name): int {
         $count = 0;
         foreach ($tasks as $task) {
@@ -72,13 +76,11 @@
         return $hours;
     }
 
-
     $page_content = include_template("main.php", [
         "projects" => $projects,
         "tasks" => $tasks,
         "show_complete_tasks" => $show_complete_tasks,
-        "url" => $url,
-        "ids" => $ids
+        "url" => $url
     ]);
 
     $layout_content = include_template("layout.php", [
@@ -86,8 +88,6 @@
         "user_name" => "Sergey",
         "title" => "Дела в порядке"
     ]);
-
-
 
     print($layout_content);
 

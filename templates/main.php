@@ -69,42 +69,22 @@
                         <?php else: ?>                       
                             <tr class="tasks__item task">
                         <?php endif; ?>
-
-                        <?php if ($ids === NULL): ?> 
-                            <?php 
-                                    $hours = hours_before_data_task($val["dt_term"]);
-                                    if ($hours <= 24): 
-                                ?>
-                                    <tr class="task--important">
-                                <?php endif; ?>     
-
-                                        <td class="task__select">
-                                            <label class="checkbox task__checkbox">
-                                                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                                                <span class="checkbox__text"><?=htmlspecialchars($val["name"]); ?></span>
-                                            </label>
-                                        </td>
-                                        <td class="task__date"><?=$val["dt_term"]; ?></td>
-                                </tr> 
-                        <?php endif; ?>
-
-                        <?php if($val["project_id"] === $ids): ?>
-                            <?php 
-                                $hours = hours_before_data_task($val["dt_term"]);
-                                if ($hours <= 24): 
-                            ?>
-                                <tr class="task--important">
-                            <?php endif; ?>     
-
-                                    <td class="task__select">
-                                        <label class="checkbox task__checkbox">
-                                            <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                                            <span class="checkbox__text"><?=htmlspecialchars($val["name"]); ?></span>
-                                        </label>
-                                    </td>
-                                    <td class="task__date"><?=$val["dt_term"]; ?></td>
-                                </tr> 
-                        <?php endif; ?>                         
+                       
+                        <?php 
+                            $hours = hours_before_data_task($val["dt_term"]);
+                            if ($hours <= 24): 
+                        ?>
+                            <tr class="task--important">
+                        <?php endif; ?>     
+                        
+                                <td class="task__select">
+                                    <label class="checkbox task__checkbox">
+                                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
+                                        <span class="checkbox__text"><?=htmlspecialchars($val["name"]); ?></span>
+                                     </label>
+                                </td>
+                                <td class="task__date"><?=$val["dt_term"]; ?></td>
+                            </tr>                        
                     <?php endforeach; ?>
 
                 </table>
