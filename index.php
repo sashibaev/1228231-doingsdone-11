@@ -23,20 +23,19 @@
     //Для каждого пункта с названием проекта сформировать адрес ссылки, имя сценария и параметр запроса равного идентификатору проекта
     $scriptname = pathinfo(__FILE__, PATHINFO_BASENAME);
     $url = "/" . $scriptname . "?";
-    
+    $ids = 0; 
     if (isset($_GET["id"])) {
-        $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
-        $ids = 0;       
-        foreach($projects as $value){
+        $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);              
+        foreach($projects as $value) {
             $ids .= in_array($id, $value);             
         }
         if ($ids) {
-            $ids = $id; 
+            $ids = $id;
         }
-        else  {
+        else {                        
             print"Ошибка, 404";
-        }       
-           
+        }
+
         $sql = "SELECT id, date_created, status, name, link, dt_term, user_id, project_id FROM tasks WHERE 
         project_id = $ids";
         $result = mysqli_query($con, $sql);        
@@ -57,7 +56,7 @@
         $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
       
-    function get_count_of_task(array $tasks, $project_name): int {
+    function get_count_of_task(array $tasks, array $project_name): int {
         $count = 0;
         foreach ($tasks as $task) {
             if ($task["project_id"] === $project_name["id"]) {
@@ -80,6 +79,7 @@
         "projects" => $projects,
         "tasks" => $tasks,
         "show_complete_tasks" => $show_complete_tasks,
+        "ids" => $ids,
         "url" => $url
     ]);
 

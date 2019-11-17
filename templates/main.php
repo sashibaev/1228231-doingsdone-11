@@ -6,15 +6,10 @@
                     <ul class="main-navigation__list">                        
                         
                         <?php foreach ($projects as $project_name): ?>                             
-                            <li class="main-navigation__list-item">
-                                
-                                <a class="main-navigation__list-item-link 
-                                    <?php if ($project_name["id"] === $ids): ?>
-                                        main-navigation__list-item--active
-                                    <?php endif; ?>"
+                            <li class="main-navigation__list-item <?php if ($project_name["id"] === $ids): ?>main-navigation__list-item--active <?php endif; ?>">                           
+                                <a class="main-navigation__list-item-link"
                                     href="<?=$url . "id=" . $project_name["id"]; ?>"><?=htmlspecialchars($project_name["name"]); ?>  
                                 </a>
-
                                 <span class="main-navigation__list-item-count">
                                     <?php                                                                            
                                         echo get_count_of_task($tasks, $project_name);  
