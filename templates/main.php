@@ -5,22 +5,22 @@
                 <nav class="main-navigation">                    
                     <ul class="main-navigation__list">                        
                         
-
-                        <?php foreach ($projects as $project_name): ?>                             
-                            <li class="main-navigation__list-item">
-
-                                <a class="main-navigation__list-item-link" href="#"><?=htmlspecialchars($project_name["name"]); ?></a>
-
+                        <?php foreach ($projects as $project): ?>                             
+                            <li class="main-navigation__list-item <?= (isset($_GET['id']) && $project["id"] === $_GET['id']) ? 'main-navigation__list-item--active' : '' ?>">                           
+                                
+                                <a class="main-navigation__list-item-link"
+                                     href="<?= "{$_SERVER['SCRIPT_NAME']}?id={$project["id"]}"; ?>"><?=htmlspecialchars($project["name"]);  ?>  
+                                </a>
+                                
                                 <span class="main-navigation__list-item-count">
-                                    <?php                                                                              
-                                        echo get_count_of_task($tasks, $project_name);  
+                                    <?php    
 
+                                     echo $project['count'];                                                                       
+                                        //echo get_count_of_task($tasks, $project_name);  
                                     ?>
                                 </span>
                             </li>
-                        <?php endforeach; ?>
-
-                        
+                        <?php endforeach; ?>                       
                     </ul>
                 </nav>
 
@@ -57,8 +57,7 @@
                 </div>
 
                 <table class="tasks">
-                   
-                     
+                                       
                     <?php foreach ($tasks as $val): ?> 
                         <?php if ($val["status"] == 1 and $show_complete_tasks === 0) {
                                    continue;  
@@ -68,23 +67,23 @@
                             <tr class="tasks__item task task--completed">                                      
                         <?php else: ?>                       
                             <tr class="tasks__item task">
-                        <?php endif; ?> 
-
+                        <?php endif; ?>
+                       
                         <?php 
                             $hours = hours_before_data_task($val["dt_term"]);
                             if ($hours <= 24): 
                         ?>
                             <tr class="task--important">
                         <?php endif; ?>     
-
+                        
                                 <td class="task__select">
                                     <label class="checkbox task__checkbox">
                                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
                                         <span class="checkbox__text"><?=htmlspecialchars($val["name"]); ?></span>
-                                    </label>
+                                     </label>
                                 </td>
                                 <td class="task__date"><?=$val["dt_term"]; ?></td>
-                            </tr>                          
+                            </tr>                        
                     <?php endforeach; ?>
 
                 </table>

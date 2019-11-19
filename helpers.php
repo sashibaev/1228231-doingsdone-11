@@ -142,3 +142,25 @@ function include_template($name, array $data = []) {
 
     return $result;
 }
+
+function get_database_connection() {
+$connection = mysqli_connect("localhost", "root", "", "affairs_ok" );
+    if($connection === false) {
+        printf("Соединение не установлено",mysqli_connect_error());
+        exit();
+    }
+    mysqli_set_charset($connection, "utf8");
+    
+    return $connection;
+}
+
+function get_projects($connection) {
+    $sql = "SELECT p.id, p.`name`, (SELECT count(id) FROM tasks WHERE tasks.project_id = p.id) as `count` FROM projects p";
+    $res = mysqli_query($connection, $sql);
+
+    if (!$res) {
+        got_sql_error($connection);
+    }
+
+    return mysqli_fetch_all($res, MYSQLI_ASSOC);
+}
