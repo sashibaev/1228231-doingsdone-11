@@ -48,7 +48,7 @@
     function got_sql_error($connection) {
         $error = mysqli_error($connection);
         printf("Ошибка MySQL: ". $error);
-        exit();
+        die();
     }
 
     // задание 3 урок 2  работаем с датой

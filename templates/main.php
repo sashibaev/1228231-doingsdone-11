@@ -16,7 +16,6 @@
                                     <?php    
 
                                      echo $project['count'];                                                                       
-                                        //echo get_count_of_task($tasks, $project_name);  
                                     ?>
                                 </span>
                             </li>

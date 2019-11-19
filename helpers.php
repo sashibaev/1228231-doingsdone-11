@@ -144,10 +144,10 @@ function include_template($name, array $data = []) {
 }
 
 function get_database_connection() {
-$connection = mysqli_connect("localhost", "root", "", "affairs_ok" );
+    $connection = mysqli_connect("localhost", "root", "", "affairs_ok" );
     if($connection === false) {
-        printf("Соединение не установлено",mysqli_connect_error());
-        exit();
+        print("Соединение не установлено" . mysqli_connect_error());
+        die();
     }
     mysqli_set_charset($connection, "utf8");
     
