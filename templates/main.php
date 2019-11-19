@@ -6,17 +6,16 @@
                     <ul class="main-navigation__list">                        
                         
                         <?php foreach ($projects as $project): ?>                             
-                            <li class="main-navigation__list-item <?= (isset($_GET['id']) && $project["id"] === $_GET['id']) ? 'main-navigation__list-item--active' : '' ?>">                           
+                            <li class="main-navigation__list-item <?= (isset($_GET["id"]) && $project["id"] === $_GET["id"]) ? "main-navigation__list-item--active" : "" ?>">                           
                                 
                                 <a class="main-navigation__list-item-link"
-                                     href="<?= "{$_SERVER['SCRIPT_NAME']}?id={$project["id"]}"; ?>"><?=htmlspecialchars($project["name"]);  ?>  
+                                     href="<?= "{$_SERVER["SCRIPT_NAME"]}?id={$project["id"]}"; ?>"><?=htmlspecialchars($project["name"]);  ?>  
                                 </a>
                                 
                                 <span class="main-navigation__list-item-count">
                                     <?php    
 
-                                     echo $project['count'];                                                                       
-                                        //echo get_count_of_task($tasks, $project_name);  
+                                     echo $project["count"];                                                                        
                                     ?>
                                 </span>
                             </li>
