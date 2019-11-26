@@ -69,7 +69,7 @@
                         <?php endif; ?>
                        
                         <?php 
-                            $hours = hours_before_data_task($val["dt_term"]);
+                            $hours = hoursBeforeDataTask($val["dt_term"]);
                             if ($hours <= 24): 
                         ?>
                             <tr class="task--important">
