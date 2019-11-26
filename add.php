@@ -6,6 +6,7 @@
 
     $projects  = getProjects($con);
     $projects_ids = array_column($projects, "id");
+    $users = getUsers($con);
 
     
   
@@ -15,7 +16,7 @@
 
     $layout_content = include_template("layout.php", [
         "content" => $page_content,
-        "user_name" => "Sergey",
+        "users" => $users,
         "title" => "Добавление задачи"
     ]);
 

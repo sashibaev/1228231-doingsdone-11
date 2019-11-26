@@ -8,6 +8,8 @@
 
     $projects  = getProjects($con);
     
+    $users = getUsers($con);
+
     
     if (isset($_GET["id"])) {
         $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
@@ -55,7 +57,7 @@
 
     $layout_content = include_template("layout.php", [
         "content" => $page_content,
-        "user_name" => "Сергей",
+        "users" => $users,
         "title" => "Дела в порядке"
     ]);
 

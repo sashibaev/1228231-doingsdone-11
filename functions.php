@@ -34,7 +34,7 @@
 
     
     function getUsers($connection) {
-    	$sqli = "SELECT u.id, u.`name`, u.password, `email` FROM users u WHERE u.id = 3";
+    	$sqli = "SELECT u.id, u.`name`, password, email FROM users u WHERE u.id = 3";
     	$res = mysqli_query($connection, $sqli);
 
     	if (!$res) {
