@@ -36,7 +36,7 @@
         }
 
     } else {
-        $sql = "SELECT id, date_created, status, name, link, dt_term, user_id, project_id FROM tasks";
+        $sql = "SELECT id, date_created, status, name, link, dt_term, user_id, project_id FROM tasks WHERE user_id = 3";
         $statement = mysqli_prepare($con, $sql);
     }
 
