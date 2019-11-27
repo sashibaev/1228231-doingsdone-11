@@ -44,6 +44,14 @@
     	return mysqli_fetch_all($res, MYSQLI_ASSOC);
     }
 
+    
+    function userName($users) {
+        foreach ($users as $user) {
+            $user_name = $user["name"];   
+        }
+        return $user_name;
+    }
+
 
     // задание 3 урок 2  работаем с датой 
     function hoursBeforeDataTask(?string $val): int {
@@ -57,9 +65,9 @@
      
 
 	//после отправки формы, заполненные поля не должны очищаться
-	function getPostVal($name) {
+	function getPostVal($value) {
 
-	    return filter_input(INPUT_POST, $name);
+	    return filter_input(INPUT_POST, $value);
 	}
 
 
@@ -70,7 +78,7 @@
 	        return "Заполните имя задачи";
 	    }
 	
-        //return $name;
+        return null;
 	}   
 
 
@@ -81,20 +89,31 @@
 	        return "Указан несуществующий проект";
 	    }
 
-	    return null;
+	    //return null;
 	}
 
 
     //дата выполнения задачи должна быть больше или равна текущей дате.
-    function checkCurrentDate($date) {
-        $current_date = date(Y.m.d);
-        $dt_term = $_POST("date");
-        if ($current_date > $dt_term) {
+    function checkCurrentDate($value) {
+    	if (isset($_POST["value"])) {
+            $current_date = date("Y.m.d");
+            $dt_term = $_POST("date");
+            if ($current_date > $dt_term) {
 
-            return "Дата должна быть больше или равна текущей";	
+                return "Дата должна быть больше или равна текущей";	
+            }    
         } 
 
-        return NULL;
+        return null;
     }
 
     
+    function isCorrectLength($name, $min, $max) {
+        $len = strlen($_POST["name"]);
+        if ($len < $min or $len > $max) {
+            return "Это поле должно быть от $min до $max символов";
+        }        
+        } 
+
+        
+

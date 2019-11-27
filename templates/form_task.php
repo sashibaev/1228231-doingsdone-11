@@ -29,26 +29,39 @@
         <h2 class="content__main-heading">Добавление задачи</h2>
 
         <form class="form"  action="add.php" method="post" autocomplete="off" enctype="multipart/form-data">
+          
           <div class="form__row">
-            <label class="form__label" for="name">Название <sup>*</sup></label>
+            <label class="form__label" for="name">Название<sup>*</sup></label>
             <?php $classname = isset($errors["name"]) ? "form_input--error" : ""; ?>
-            <input class="form__input" type="text" name="name" id="name" value="<?=getPostVal("name"); ?>" placeholder="Введите название">
+            <input class="form__input <?=$classname; ?>" type="text" name="name" id="name" value="<?=getPostVal("name"); ?>" placeholder="Введите название">
+            <?php if (isset($errors["name"])): ?> 
+            <p class = "form_message"><?=$errors["name"]; ?></p>
+            <?php endif; ?>
           </div>
 
           <div class="form__row">
             <label class="form__label" for="project">Проект <sup>*</sup></label>
-            <?php $classname = isset($errors["project"]) ? "form_input--error" : ""; ?>
-            <select class="form__input form__input--select" name="project" id="project_id">
+            <?php $classname = isset($errors["project_id"]) ? "form_input--error" : ""; ?>
+            <select class="form__input form__input--select <?=$classname; ?>" name="project_id" id="project">
+              <option value="">Выбрать</option>
               <?php foreach ($projects as $project): ?>   
-                <option value="<?=$project["id"]; ?>"><?=$project["name"]; ?></option>
+                <option value="<?=$project["id"]; ?>"
+                  <?php if ($project["id"] == getPostVal("project_id")): ?>selected<?php endif; ?>><?=$project["name"]; ?>
+                </option>
               <?php endforeach; ?> 
             </select>
+            <?php if (isset($errors["project_id"])): ?> 
+            <p class = "form_message"><?=$errors["project_id"]; ?></p>
+            <?php endif; ?>
           </div>
 
           <div class="form__row">
             <label class="form__label" for="date">Дата выполнения</label>
-
-            <input class="form__input form__input--date" type="text" name="date" id="date" value="<?=getPostVal("data"); ?>"placeholder="Введите дату в формате ГГГГ-ММ-ДД">
+            <?php $classname = isset($errors["date"]) ? "form_input--error" : ""; ?>
+            <input class="form__input form__input--date <?=$classname; ?>" type="text" name="date" id="date" value="<?=getPostVal("date"); ?>"placeholder="Введите дату в формате ГГГГ-ММ-ДД">
+            <?php if (isset($errors["date"])): ?> 
+            <p class = "form_message"><?=$errors["date"]; ?></p>
+            <?php endif; ?>
           </div>
 
           <div class="form__row">

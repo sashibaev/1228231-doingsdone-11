@@ -136,7 +136,7 @@ function include_template($name, array $data = []) {
 
     ob_start();
     extract($data);
-    require $name;
+    require_once $name;
 
     $result = ob_get_clean();
 

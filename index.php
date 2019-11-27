@@ -9,8 +9,9 @@
     $projects  = getProjects($con);
     
     $users = getUsers($con);
-
     
+    $user_name = username($users);
+        
     if (isset($_GET["id"])) {
         $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
         $sql = "SELECT id, date_created, status, `name`, link, dt_term, user_id, project_id FROM tasks WHERE project_id = ?";
@@ -57,7 +58,7 @@
 
     $layout_content = include_template("layout.php", [
         "content" => $page_content,
-        "users" => $users,
+        "user_name" => $user_name,
         "title" => "Дела в порядке"
     ]);
 
