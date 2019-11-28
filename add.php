@@ -12,13 +12,12 @@
 
     $projects_ids = array_column($projects, "id");
     
-    $name = $project_id = $dt_term = $date = "0";
+    $name = $project_id = $date = "0";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $required_fields = ["name", "project_id"]; // Список обязательных полей
         $errors = []; // массив ошибок
        
-         // echo($_POST["name"] . $_POST["project"] . $_POST["date"]);
         $rules = [
             "project_id" => function($value) use ($projects_ids) {
                 return validateProject($value, $projects_ids); 
@@ -32,8 +31,8 @@
                 return checkCurrentDate("date");
             },
                         
-            "name" => function($value) {
-                return isCorrectLength("name", 5, 200);               
+            "name" => function($name) {
+                return isCorrectLength("name", 11, 200);               
             }
         ];
 
@@ -62,39 +61,43 @@
             $page_content = include_template("form_task.php",  
                 [
                     "projects" => $projects,                   
-                    "errors" => $errors                    
+                    "errors" => $errors                   
                 ]);
         }
-        /*else {
+        else {
 
             if (!empty($_FILES["file"])) {
-            $file_name = $_FILES["file"]["name"];
-            $file_path = __DIR__ . "/uploads/";
-            $file_url = "uploads/" . $file_name;
+                $file_name = $_FILES["file"]["name"];
+                $file_path = __DIR__ . "/uploads/";
+                $file_link = "uploads/" . $file_name;
             
-            move_uploaded_file($_FILES["file"]["tmp_name"], $file_path . $file_name);
-            $tasks["file"] = $file_name;
+                move_uploaded_file($_FILES["file"]["tmp_name"], $file_path . $file_name);
+                $tasks["file"] = $file_name;
             }
-        
-            $sql = "INSERT INTO task (status, name, link, dt_term, user_id,project_id, ) VALUES (NOW(), 0, ?, ?, ?, 3, ?)";
-            $stmt = db_get_prepare_stmt($con, $sql, $task);
+
+            $sqli = "INSERT INTO tasks (date_created, status, name, link, dt_term, user_id, project_id) VALUES (NOW(), 0, ?, ?, ?, 3, ?)";
+            $stmt = db_get_prepare_stmt($con, $sqli, $tasks);
             $res = mysqli_stmt_execute($stmt);
+           
+            if (!$res) {
+                $error = mysqli_error($con);
+                print("Ошибка MySQL: " . $error);
+            } else {
+                header("Location: index.php");
+            }
 
-            if ($res) {
-                $task_id = mysqli_insert_id($con);
-
-                $header("Location: index.php");
-                //$header("Location:/index.php?success=true");
-            }    
-        }*/
+                
+        }
     }
-    
     else {
-        $page_content = include_template("form_task.php", [
+    $page_content = include_template("form_task.php", [
         "projects" => $projects
-        ]);
+    ]);
     }
     
+    $page_content = include_template("form_task.php", [
+        "projects" => $projects
+    ]);
 
     $layout_content = include_template("layout.php", [
         "content" => $page_content,

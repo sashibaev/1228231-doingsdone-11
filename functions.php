@@ -3,7 +3,7 @@
 	function getDatabaseConnection() {
 	    $connection = mysqli_connect("localhost", "root", "", "affairs_ok" );
 	    if($connection === false) {
-	        printf("Соединение не установлено",mysqli_connect_error());
+	        print("Соединение не установлено" . mysqli_connect_error());
 
 	        die();
 	    }
@@ -15,7 +15,7 @@
 
     function gotSqlError($connection) {
         $error = mysqli_error($connection);
-        printf("Ошибка MySQL: ". $error);
+        print("Ошибка MySQL: " . $error);
 
         die();
     }
@@ -108,10 +108,10 @@
     }
 
     
-    function isCorrectLength($name, $min, $max) {
+    function isCorrectLength($value, $min, $max) {
         $len = strlen($_POST["name"]);
         if ($len < $min or $len > $max) {
-            return "Это поле должно быть от $min до $max символов";
+            return "Это поле должно быть от 5 до 100 символов";
         }        
         } 
 
