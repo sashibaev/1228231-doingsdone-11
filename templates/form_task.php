@@ -31,7 +31,7 @@
         <form class="form"  action="add.php" method="post" autocomplete="off" enctype="multipart/form-data">
           
           <div class="form__row">
-            <?php $classname = isset($errors["name"]) ? "form_input--error" : ""; ?> 
+            <?php $classname = isset($errors["name"]) ? "form__input--error" : ""; ?> 
             <label class="form__label" for="name">Название<sup>*</sup></label>            
             
             <input class="form__input <?= $classname; ?>" type="text" name="name" id="name" value="<?=getPostVal("name"); ?>" placeholder="Введите название">
@@ -41,7 +41,7 @@
           </div>
 
           <div class="form__row">
-            <?php $classname = isset($errors["project_id"]) ? "form_input--error" : ""; ?>
+            <?php $classname = isset($errors["project_id"]) ? "form__input--error" : ""; ?>
             <label class="form__label" for="project">Проект <sup>*</sup></label>
             
             <select class="form__input form__input--select <?= $classname; ?>" name="project_id" id="project">
@@ -62,7 +62,7 @@
           </div>
 
           <div class="form__row">
-            <?php $classname = isset($errors["date"]) ? "form_input--error" : ""; ?>
+            <?php $classname = isset($errors["date"]) ? "form__input--error" : ""; ?>
             <label class="form__label" for="date">Дата выполнения</label>
             
             <input class="form__input form__input--date <?= $classname; ?>" type="text" name="date" id="date" value="<?=getPostVal("date"); ?>"placeholder="Введите дату в формате ГГГГ-ММ-ДД">
