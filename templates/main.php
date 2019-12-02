@@ -1,25 +1,25 @@
- 
+
             <section class="content__side">
                 <h2 class="content__side-heading">Проекты</h2>
 
-                <nav class="main-navigation">                    
-                    <ul class="main-navigation__list">                        
-                        
-                        <?php foreach ($projects as $project): ?>                             
-                            <li class="main-navigation__list-item <?=(isset($_GET["id"]) && $project["id"] === $_GET["id"]) ? "main-navigation__list-item--active" : "" ?>">                           
-                                
-                                <a class="main-navigation__list-item-link"
-                                     href="<?="{$_SERVER["SCRIPT_NAME"]}?id={$project["id"]}"; ?>"><?=htmlspecialchars($project["name"]);  ?>  
-                                </a>
-                                
-                                <span class="main-navigation__list-item-count">
-                                    <?php    
+                <nav class="main-navigation">
+                    <ul class="main-navigation__list">
 
-                                     echo $project["count"];                                                                        
+                        <?php foreach ($projects as $project): ?>
+                            <li class="main-navigation__list-item <?=(isset($_GET["id"]) && $project["id"] === $_GET["id"]) ? "main-navigation__list-item--active" : "" ?>">
+
+                                <a class="main-navigation__list-item-link"
+                                     href="<?="{$_SERVER["SCRIPT_NAME"]}?id={$project["id"]}"; ?>"><?=htmlspecialchars($project["name"]);  ?>
+                                </a>
+
+                                <span class="main-navigation__list-item-count">
+                                    <?php
+
+                                     echo $project["count"];
                                     ?>
                                 </span>
                             </li>
-                        <?php endforeach; ?>                       
+                        <?php endforeach; ?>
                     </ul>
                 </nav>
 
@@ -30,8 +30,10 @@
             <main class="content__main">
                 <h2 class="content__main-heading">Список задач</h2>
 
-                <form class="search-form" action="index.php" method="post" autocomplete="off">
-                    <input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
+                <form class="search-form" action="" method="post" autocomplete="off">
+                    <label>
+                        <input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
+                    </label>
 
                     <input class="search-form__submit" type="submit" name="" value="Искать">
                 </form>
@@ -45,36 +47,36 @@
                     </nav>
 
                     <label class="checkbox">
-                        
+
                         <!--добавить сюда атрибут "checked", если переменная $show_complete_tasks равна единице-->
-                        <input class="checkbox__input visually-hidden show_completed" type="checkbox" 
-                            <?php if ($show_complete_tasks === 1): ?> 
-                               checked      
+                        <input class="checkbox__input visually-hidden show_completed" type="checkbox"
+                            <?php if ($show_complete_tasks === 1): ?>
+                               checked
                             <?php endif; ?>>
                         <span class="checkbox__text">Показывать выполненные</span>
                     </label>
                 </div>
 
                 <table class="tasks">
-                                       
-                    <?php foreach ($tasks as $val): ?> 
+
+                    <?php foreach ($tasks as $val): ?>
                         <?php if ($val["status"] == 1 and $show_complete_tasks === 0) {
-                                   continue;  
-                                } 
-                        ?>                                                 
-                        <?php if ($val["status"] == 1): ?>                                                 
-                            <tr class="tasks__item task task--completed">                                      
-                        <?php else: ?>                       
+                                   continue;
+                                }
+                        ?>
+                        <?php if ($val["status"] == 1): ?>
+                            <tr class="tasks__item task task--completed">
+                        <?php else: ?>
                             <tr class="tasks__item task">
                         <?php endif; ?>
-                       
-                        <?php 
+
+                        <?php
                             $hours = hoursBeforeDataTask($val["dt_term"]);
-                            if ($hours <= 24): 
+                            if ($hours <= 24):
                         ?>
                             <tr class="task--important">
-                        <?php endif; ?>     
-                        
+                        <?php endif; ?>
+
                                 <td class="task__select">
                                     <label class="checkbox task__checkbox">
                                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
@@ -82,7 +84,7 @@
                                      </label>
                                 </td>
                                 <td class="task__date"><?=$val["dt_term"]; ?></td>
-                            </tr>                        
+                            </tr>
                     <?php endforeach; ?>
 
                 </table>

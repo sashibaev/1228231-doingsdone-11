@@ -7,24 +7,26 @@
     $con = getDatabaseConnection();
 
     $projects  = getProjects($con);
-    
+
     $users = getUsers($con);
-    
-    $user_name = username($users);
-        
+
+    foreach ($users as $user) {
+        $user_name = $user["name"];
+    }
+
     if (isset($_GET["id"])) {
         $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
         $sql = "SELECT id, date_created, status, `name`, link, dt_term, user_id, project_id FROM tasks WHERE project_id = ?";
         if ($statement = mysqli_prepare($con, $sql)) {
-            mysqli_stmt_bind_param($statement, 'i', $id);
+            mysqli_stmt_bind_param($statement, "i", $id);
         } else {
-            got_sql_error($con);
+            gotSqliError($con);
         }
 
         $is_project_exists = false;
 
         foreach ($projects as $project) {
-            if ($project['id'] === $id) {
+            if ($project["id"] === $id) {
                 $is_project_exists = true;
                 break;
             }
@@ -32,7 +34,7 @@
 
         if (!$is_project_exists) {
             header("HTTP/1.0 404 Not Found");
-            print 'Проект не найден';
+            print "Проект не найден";
             die();
         }
 
@@ -46,9 +48,9 @@
         $result = mysqli_stmt_get_result($statement);
         $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
     } else {
-        got_sql_error($connection);
+        gotSqliError($con);
     }
-   
+
 
     $page_content = include_template("main.php", [
         "projects" => $projects,
@@ -61,7 +63,6 @@
         "user_name" => $user_name,
         "title" => "Дела в порядке"
     ]);
-
 
     print($layout_content);
 
