@@ -92,6 +92,7 @@
 
             } else {
                 header("Location: http://1228231-doingsdone-11/");
+                exit();
             }
 
             $page_content = include_template("form_task.php", [
