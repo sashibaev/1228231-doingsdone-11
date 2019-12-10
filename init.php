@@ -20,5 +20,4 @@
         die();
     }
 
-    $con = getDatabaseConnection();
 ?>

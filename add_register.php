@@ -6,6 +6,8 @@
     include_once("functions.php");
     include_once("init.php");
     
+    $con = getDatabaseConnection();
+    
     $email = $password = $name = "0";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -65,17 +67,24 @@
             }
 
     	} else {
-        
+             
+            $footer = include_template("footer.php", []);
 	        //передаем в шаблон список ошибок и данные из формы
 	    	$form_register = include_template("form_register.php", [	
-	    	    "errors" => $errors,
+	    	    "footer" => $footer,
+                "errors" => $errors,
 	    	    "fields" => $fields,
 	            "title" => "Регистрация пользователя"
-	        ]);
+	        ]);           
         }
 
     } else {
+        $footer = include_template("footer.php", [
+            "add_task_footer" => ""
+        ]);
+
         $form_register = include_template("form_register.php", [
+            "footer" => $footer,
             "title" => "Регистрация пользователя"
         ]);
     }

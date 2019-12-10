@@ -5,6 +5,8 @@
 
     $show_complete_tasks = rand(0, 1);
 
+    $con = getDatabaseConnection();
+
     $projects  = getProjects($con);
 
     $users = getUsers($con);
@@ -57,8 +59,15 @@
         "show_complete_tasks" => $show_complete_tasks,
     ]);
 
+    $add_task_footer = include_template("add_task_footer.php", []);
+
+    $footer = include_template("footer.php", [
+        "add_task_footer" => $add_task_footer
+    ]);
+
     $layout_content = include_template("layout.php", [
         "content" => $page_content,
+        "footer" => $footer,
         "user_name" => $user_name,
         "title" => "Дела в порядке"
     ]);
