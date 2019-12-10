@@ -1,6 +1,26 @@
 <?php
 
-	function getProjects($connection) {
+	function getDatabaseConnection() {
+        $connection = mysqli_connect("localhost", "root", "", "affairs_ok" );
+        if($connection === false) {
+            print("Соединение не установлено" . mysqli_connect_error());
+
+            die();
+        }
+        mysqli_set_charset($connection, "utf8");
+
+        return $connection;
+    }
+
+
+    function gotSqliError($connection) {
+        $error = mysqli_error($connection);
+        print("Ошибка MySQL: " . $error);
+
+        die();
+    }
+    
+    function getProjects($connection) {
 	    $sqli = "SELECT p.id, p.`name`, (SELECT count(id) FROM tasks WHERE tasks.project_id = p.id) as `count` FROM projects p WHERE p.user_id = 3 ";
 	    $res = mysqli_query($connection, $sqli);
 

@@ -1,15 +1,8 @@
  <?php
-    include_once("helpers.php");
-    include_once("functions.php");
+        
     include_once("init.php");
 
     $show_complete_tasks = rand(0, 1);
-
-    $con = getDatabaseConnection();
-
-    $projects  = getProjects($con);
-
-    $users = getUsers($con);
 
     foreach ($users as $user) {
         $user_name = $user["name"];
@@ -52,11 +45,21 @@
         gotSqliError($con);
     }
 
-
     $page_content = include_template("main.php", [
         "projects" => $projects,
         "tasks" => $tasks,
         "show_complete_tasks" => $show_complete_tasks,
+    ]);
+
+    $anonym_header = include_template("anonym_header.php", []);
+
+    $auth_user_header = include_template("auth_user_header.php", [
+        "user_name" => $user_name
+    ]); 
+
+    $header = include_template("header.php", [
+        "anonym_header" => $anonym_header,
+        "auth_user_header" => $auth_user_header
     ]);
 
     $add_task_footer = include_template("add_task_footer.php", []);
@@ -66,6 +69,7 @@
     ]);
 
     $layout_content = include_template("layout.php", [
+        "header" => $header,
         "content" => $page_content,
         "footer" => $footer,
         "user_name" => $user_name,

@@ -9,36 +9,32 @@
     <link rel="stylesheet" href="../css/flatpickr.min.css">
 </head>
 
-<body>
-<h1 class="visually-hidden">Дела в порядке</h1>
+<body 
+    <?php if (!isset($_SESSION["user"])): ?> 
+        class= body-background>
+    <?php endif; ?>
 
-<div class="page-wrapper">
-    <div class="container container--with-sidebar">
-        <header class="main-header">
-            <a href="/">
-                <img src="../img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
-            </a>
+    <h1 class="visually-hidden">Дела в порядке</h1>
 
-            <div class="main-header__side">
-                <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить задачу</a>
+    <div class="page-wrapper">
+        
+        <?php if (!isset($_SESSION["user"])): ?> 
+            <div class="container">
 
-                <div class="main-header__side-item user-menu">
-                    <div class="user-menu__data">
-                        <p><?=$user_name; ?></p>
-                        <a href="#">Выйти</a>
-                    </div>
-                </div>
+        <?php else: ?>         
+            <div class="container container--with-sidebar">             
+        <?php endif; ?>
+        
+                <?=$header; ?>
+
+                <div class="content"><?=$content; ?></div>
+
             </div>
-        </header>
-
-        <div class="content"><?=$content; ?></div>
-
     </div>
-</div>
 
-<?=$footer; ?>
+    <?=$footer; ?>
 
-<script src="flatpickr.js"></script>
-<script src="script.js"></script>
+    <script src="flatpickr.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

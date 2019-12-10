@@ -14,8 +14,7 @@
 
                                 <span class="main-navigation__list-item-count">
                                     <?php
-
-                                     echo $project["count"];
+                                       echo $project["count"];
                                     ?>
                                 </span>
                             </li>

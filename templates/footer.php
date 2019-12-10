@@ -6,7 +6,13 @@
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
 
-       <?=$add_task_footer; ?>
+        <?php if (!isset($_SESSION["user"])): ?> 
+    
+        <?php else: ?>
+
+            <?=$add_task_footer; ?>
+    
+        <?php endif; ?>  
 
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>

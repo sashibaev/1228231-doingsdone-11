@@ -1,23 +1,14 @@
 <?php
 
-    function getDatabaseConnection() {
-	    $connection = mysqli_connect("localhost", "root", "", "affairs_ok" );
-	    if($connection === false) {
-	        print("Соединение не установлено" . mysqli_connect_error());
+   // session_start();
 
-	        die();
-	    }
-	    mysqli_set_charset($connection, "utf8");
+   include_once("helpers.php");
+   include_once("functions.php");
 
-	    return $connection;
-	}
+   $con = getDatabaseConnection();
 
+   $projects  = getProjects($con);
 
-    function gotSqliError($connection) {
-        $error = mysqli_error($connection);
-        print("Ошибка MySQL: " . $error);
-
-        die();
-    }
+   $users = getUsers($con);
 
 ?>
