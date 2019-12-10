@@ -1,10 +1,9 @@
  <?php
     include_once("helpers.php");
     include_once("functions.php");
+    include_once("init.php");
 
     $show_complete_tasks = rand(0, 1);
-
-    $con = getDatabaseConnection();
 
     $projects  = getProjects($con);
 

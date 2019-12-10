@@ -1,8 +1,7 @@
 <?php
     include_once("helpers.php");
     include_once("functions.php");
-
-    $con = getDatabaseConnection();
+    include_once("init.php");
 
     $projects  = getProjects($con);
 
