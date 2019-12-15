@@ -82,7 +82,13 @@
                             <span class="checkbox__text"><?=htmlspecialchars($val["name"]); ?></span>
                         </label>
                     </td>
-                    <td><a href="<?=$val['link']; ?>" download>скачать файл</a></td>
+
+                    <td>
+                    <?php if ($val["link"] <> NULL): ?>
+                        <a href="<?=$val['link']; ?>" download><img src="../img/download-link.png" alt="Скачать файл"></a>
+                    <?php endif; ?>
+                    </td>
+                    
                     <td class="task__date"><?=$val["dt_term"]; ?></td>
                 </tr>
         <?php endforeach; ?>
