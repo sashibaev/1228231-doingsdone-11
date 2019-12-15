@@ -2,10 +2,12 @@
 
     include_once("init.php");
 
-    foreach ($users as $user) {
-        $user_name = $user["name"];
+    foreach ($_SESSION as $session) {
+        $user_id = $session["id"];  
     }
 
+    $projects = getProjects($con, $user_id);
+        
     $projects_ids = array_column($projects, "id");
 
     $name = $project_id = $dt_term = "0";
@@ -90,20 +92,18 @@
                 exit();
             }
 
-            $content = include_template("form_task.php", [
+            $content_auth = include_template("form_task.php", [
                    "projects" => $projects
             ]); 
         }
 
     } else {
-        $content = include_template("form_task.php", [
+        $content_auth = include_template("form_task.php", [
         "projects" => $projects
         ]);
     }
 
-    $auth_user_header = include_template("auth_user_header.php", [
-        "user_name" => $user_name
-    ]); 
+    $auth_user_header = include_template("auth_user_header.php", []); 
 
     $header = include_template("header.php", [
         "auth_user_header" => $auth_user_header
@@ -117,9 +117,8 @@
 
     $layout_content = include_template("layout.php", [
         "header" => $header,
-        "content" => $content,
+        "content_auth" => $content_auth,
         "footer" => $footer,
-        "user_name" => $user_name,
         "title" => "Добавление задачи"
     ]);
 

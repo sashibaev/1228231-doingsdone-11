@@ -12,7 +12,6 @@
         return $connection;
     }
 
-
     function gotSqliError($connection) {
         $error = mysqli_error($connection);
         print("Ошибка MySQL: " . $error);
@@ -20,8 +19,8 @@
         die();
     }
     
-    function getProjects($connection) {
-	    $sqli = "SELECT p.id, p.`name`, (SELECT count(id) FROM tasks WHERE tasks.project_id = p.id) as `count` FROM projects p";
+    function getProjects($connection, $user_id) {
+	    $sqli = "SELECT p.id, p.`name`,p.user_id, (SELECT count(id) FROM tasks t WHERE t.project_id = p.id AND t.user_id = '$user_id') as `count` FROM projects p";
 	    $res = mysqli_query($connection, $sqli);
 
 	    if (!$res) {
@@ -31,9 +30,8 @@
 	    return mysqli_fetch_all($res, MYSQLI_ASSOC);
 	}
 
-
     function getUsers($connection) {
-    	$sqli = "SELECT u.id, u.`name`, password, email FROM users u WHERE u.id = 3";
+    	$sqli = "SELECT id, `name`, password, email FROM users";
     	$res = mysqli_query($connection, $sqli);
 
     	if (!$res) {
@@ -42,7 +40,6 @@
 
     	return mysqli_fetch_all($res, MYSQLI_ASSOC);
     }
-
 
     // задание 3 урок 2  работаем с датой
     function hoursBeforeDataTask(?string $val): int {
@@ -54,13 +51,11 @@
         return $hours;
     }
 
-
 	//после отправки формы, заполненные поля не должны очищаться
 	function getPostVal($value) {
 
 	    return filter_input(INPUT_POST, $value);
 	}
-
 
     //проверка заполненности поля
 	function checkNameTask($name) {
@@ -72,7 +67,6 @@
         return null;
 	}
 
-
 	// функция валидации проектов
 	function validateProject($id, $allowed_list) {
 	    if (!in_array($id, $allowed_list)) {
@@ -82,7 +76,6 @@
 
 	    return null;
 	}
-
 
     //дата выполнения задачи должна быть больше или равна текущей дате.
     function checkCurrentDate($value) {

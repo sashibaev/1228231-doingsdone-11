@@ -13,9 +13,7 @@
                                 </a>
 
                                 <span class="main-navigation__list-item-count">
-                                    <?php
-                                       echo $project["count"];
-                                    ?>
+                                    <?php echo $project["count"]; ?>
                                 </span>
                             </li>
                         <?php endforeach; ?>
@@ -59,11 +57,11 @@
                 <table class="tasks">
 
                     <?php foreach ($tasks as $val): ?>
-                        <?php if ($val["status"] == 1 and $show_complete_tasks === 0) {
+                        <?php if ($val["status"] === 1 and $show_complete_tasks === 0) {
                                    continue;
                                 }
                         ?>
-                        <?php if ($val["status"] == 1): ?>
+                        <?php if ($val["status"] === 1): ?>
                             <tr class="tasks__item task task--completed">
                         <?php else: ?>
                             <tr class="tasks__item task">
@@ -78,7 +76,9 @@
 
                                 <td class="task__select">
                                     <label class="checkbox task__checkbox">
-                                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
+                                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?php if ($show_complete_tasks === 1 AND $val["status"] === 1): ?>
+                               checked
+                            <?php endif; ?>>
                                         <span class="checkbox__text"><?=htmlspecialchars($val["name"]); ?></span>
                                      </label>
                                 </td>

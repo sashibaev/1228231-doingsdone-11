@@ -8,16 +8,14 @@ $projects = $tasks = "0";
          
 if (!empty($_SESSION)) {    
     foreach ($_SESSION as $session) {
-        $id = $session["id"];   
+        $user_id = $session["id"];   
     } 
-        
-    $sqli = "SELECT p.id, p.`name`, (SELECT count(id) FROM tasks WHERE tasks.project_id = p.id) as `count` FROM projects p WHERE user_id = '$id'";
-    $res = mysqli_query($con, $sqli);
-    $projects = mysqli_fetch_all($res, MYSQLI_ASSOC);
+    
+    $projects = getProjects($con, $user_id);
 
     if (isset($_GET["id"])) {
         $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
-        $sql = "SELECT id, date_created, status, `name`, link, dt_term, user_id, project_id FROM tasks WHERE project_id = ?";
+        $sql = "SELECT id, date_created, status, `name`, link, dt_term, user_id, project_id FROM tasks WHERE project_id = ? AND user_id = '$user_id'";
 
         if ($statement = mysqli_prepare($con, $sql)) {
             mysqli_stmt_bind_param($statement, "i", $id);
@@ -42,7 +40,7 @@ if (!empty($_SESSION)) {
         }
     }
     else {
-        $sql = "SELECT id, date_created, status, name, link, dt_term, user_id, project_id FROM tasks WHERE project_id = '$id'";
+        $sql = "SELECT id, date_created, status, name, link, dt_term, user_id, project_id FROM tasks WHERE user_id = '$user_id'";
         $statement = mysqli_prepare($con, $sql);        
     }
 
@@ -61,7 +59,7 @@ $auth_user_header = include_template("auth_user_header.php", []);
 $content_auth = include_template("main.php", [
     "projects" => $projects,
     "tasks" => $tasks,
-    "show_complete_tasks" => $show_complete_tasks,
+    "show_complete_tasks" => $show_complete_tasks
 ]);       
 
 $anonym_header = include_template("anonym_header.php", []);
