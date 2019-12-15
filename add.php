@@ -1,13 +1,6 @@
 <?php
-    include_once("helpers.php");
-    include_once("functions.php");
+
     include_once("init.php");
-
-    $con = getDatabaseConnection();
-
-    $projects  = getProjects($con);
-
-    $users = getUsers($con);
 
     foreach ($users as $user) {
         $user_name = $user["name"];
@@ -82,8 +75,9 @@
             $project_id = $_POST["project_id"];
             $title = $_POST["name"];
             $dt_term = $_POST["date"];
+            $user_id = $_SESSION["id"];
             
-            $sqli = "INSERT INTO tasks (date_created, status, name, dt_term, user_id, project_id, link) VALUES (NOW(), 0, '$title', '$dt_term', 3, '$project_id', '$link')";
+            $sqli = "INSERT INTO tasks (date_created, status, name, dt_term, user_id, project_id, link) VALUES (NOW(), 0, '$title', '$dt_term', '$user_id', '$project_id', '$link')";
 
             $result = mysqli_query($con, $sqli);
 
@@ -92,21 +86,29 @@
                 print("Ошибка MySQL: " . $error);
 
             } else {
-                header("Location: http://1228231-doingsdone-11/");
+                header("Location:/index.php");
                 exit();
             }
 
-            $page_content = include_template("form_task.php", [
+            $content = include_template("form_task.php", [
                    "projects" => $projects
             ]); 
         }
 
     } else {
-        $page_content = include_template("form_task.php", [
+        $content = include_template("form_task.php", [
         "projects" => $projects
         ]);
     }
-    
+
+    $auth_user_header = include_template("auth_user_header.php", [
+        "user_name" => $user_name
+    ]); 
+
+    $header = include_template("header.php", [
+        "auth_user_header" => $auth_user_header
+    ]);
+
     $add_task_footer = include_template("add_task_footer.php", []);
 
     $footer = include_template("footer.php", [
@@ -114,7 +116,8 @@
     ]);
 
     $layout_content = include_template("layout.php", [
-        "content" => $page_content,
+        "header" => $header,
+        "content" => $content,
         "footer" => $footer,
         "user_name" => $user_name,
         "title" => "Добавление задачи"

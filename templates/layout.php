@@ -10,26 +10,30 @@
 </head>
 
 <body 
-    <?php if (!isset($_SESSION["user"])): ?> 
-        class= body-background>
-    <?php endif; ?>
+    <?php if (empty($_SESSION)): ?> 
+        class= body-background
+    <?php endif; ?>>
 
     <h1 class="visually-hidden">Дела в порядке</h1>
 
     <div class="page-wrapper">
         
-        <?php if (!isset($_SESSION["user"])): ?> 
-            <div class="container">
+           <?php if (empty($_SESSION)): ?>                 
+                <div class="container">
+                  
+                    <?=$header; ?>
 
-        <?php else: ?>         
-            <div class="container container--with-sidebar">             
-        <?php endif; ?>
-        
-                <?=$header; ?>
+                    <div class="content"><?=$content_guest; ?></div>
+                </div>      
+                      
+            <?php else: ?>         
+                <div class="container container--with-sidebar">
 
-                <div class="content"><?=$content; ?></div>
+                    <?=$header; ?>
 
-            </div>
+                    <div class="content"><?=$content_auth; ?></div> 
+                </div>
+            <?php endif; ?>                            
     </div>
 
     <?=$footer; ?>

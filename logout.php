@@ -1,7 +1,7 @@
-<? php
+<?php
+session_start();
 
-   unset($_SESSION["user"]);
-
-   header("Location:/index.php");
-
+$_SESSION;
+header("Location: /index.php");
+exit();
 ?>

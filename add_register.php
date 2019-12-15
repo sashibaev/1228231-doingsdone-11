@@ -1,20 +1,16 @@
 <?php
    
-    session_start();
+    //session_start();
 
-    include_once("helpers.php");
-    include_once("functions.php");
     include_once("init.php");
     
-    $con = getDatabaseConnection();
-    
-    $email = $password = $name = "0";
-
+    $errors = [];
+    $form = $_POST;
+   
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $required_fields = ["email", "password", "name"];
-        $errors = []; 
 
-        $fields = filter_input_array(INPUT_POST,
+        $form = filter_input_array(INPUT_POST,
             [
                 "email" => FILTER_DEFAULT,
                 "password" => FILTER_DEFAULT,
@@ -22,30 +18,35 @@
             ], true);  
 
         foreach ($required_fields as $field) {
-        	if (empty($fields[$field])) {
+        	if (empty($form[$field])) {
         		$errors[$field] = "Не заполнено поле " . $field;
         	}
-        	
-        	if ($field == "email") {
-        	    if (!filter_var($fields[$field], FILTER_VALIDATE_EMAIL)) {
-        		    $errors[$field] = "Email должен быть корректным";
-        		}
-        	}
-
-        	if ($field == "password") {
-                $len = strlen($fields[$field]);
-
-                if ($len < 8 or $len > 20) {
-                    $errors[$field] = "Длина пароля должна быть от 8 до 20 символов";
-                }
-            }
-        }
+            else {
         
+                foreach ($form as $field => $value) {
+                    //Проверка корректности email	
+                    if ($field == "email") {
+                    	if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                    		    $errors["email"] = "Email должен быть корректным";
+                    	}
+                    }
+
+                    //Проверка длины пароля, от 8 символов до 20 символов 
+                    if ($field == "password") {
+                        $len = strlen($value);
+
+                        if ($len < 8 or $len > 20) {
+                            $errors["password"] = "Длина пароля должна быть от 8 до 20 символов";
+                        }
+                    }
+                }   
+            } 
+        }
         //проверка существования пользователя с email из формы
     	if (empty($errors)) {
-    		$email = mysqli_real_escape_string($con, $fields["email"]);
-    		$sqli = "SELECT id FROM users WHERE email = '$email'";
-    		$res = mysqli_query($con, $sqli);
+    		$email = mysqli_real_escape_string($con, $form["email"]);
+    		$sql = "SELECT id FROM users WHERE email = '$email'";
+    		$res = mysqli_query($con, $sql);
 
     		if (mysqli_num_rows($res) > 0) {
     			$errors["email"] = "Пользователь с этим email уже зарегистрирован";
@@ -53,42 +54,46 @@
             else {
 
             	//преобразование пароля в хеш
-            	$password = password_hash($fields["password"], PASSWORD_DEFAULT);
+            	$password = password_hash($form["password"], PASSWORD_DEFAULT);
 
                 //добавление нового пользователя в базу
             	$sqli = "INSERT INTO users (dt_add, email, name, password) VALUES (NOW(), ?, ?, ?)";
-            	$stmt = db_get_prepare_stmt($con, $sqli, [$fields["email"], $fields["name"], $password]);
+            	$stmt = db_get_prepare_stmt($con, $sqli, [$form["email"], $form["name"], $password]);
             	$result = mysqli_stmt_execute($stmt);
-
-            	if ($result && empty($errors)) {
-                    header("Location: http://1228231-doingsdone-11/");
-                    exit();
-                }
             }
 
-    	} else {
-             
-            $footer = include_template("footer.php", []);
-	        //передаем в шаблон список ошибок и данные из формы
-	    	$form_register = include_template("form_register.php", [	
-	    	    "footer" => $footer,
-                "errors" => $errors,
-	    	    "fields" => $fields,
-	            "title" => "Регистрация пользователя"
-	        ]);           
+            if ($result && empty($errors)) {
+                header("Location:/index.php");
+                exit();
+            }
         }
+    } 
+    $content_side = include_template("content_side.php", []);
 
-    } else {
-        $footer = include_template("footer.php", [
-            "add_task_footer" => ""
-        ]);
+    $content = include_template("form_register.php", [
+        "content_side" => $content_side,
+        "errors" => $errors,
+        "form" => $form,
+    ]);    
 
-        $form_register = include_template("form_register.php", [
-            "footer" => $footer,
-            "title" => "Регистрация пользователя"
-        ]);
-    }
+    $anonym_header = include_template("anonym_header.php", []);
 
-    print($form_register);
+    $header = include_template("header.php", [
+        "anonym_header" => $anonym_header
+    ]);
+
+    $footer = include_template("footer.php", [
+        "add_task_footer" => ""
+    ]);
+
+    $layout_content = include_template("layout.php", [
+        "header" => $header,
+        "content" => $content,
+        "footer" => $footer,
+        "title" => "Регистрация пользователя"
+    ]);
+    
+
+    print($layout_content);
 
 ?>

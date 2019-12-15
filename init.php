@@ -1,14 +1,11 @@
 <?php
+session_start();
 
-   // session_start();
+include_once("helpers.php");
+include_once("functions.php");
 
-   include_once("helpers.php");
-   include_once("functions.php");
+$con = getDatabaseConnection();
 
-   $con = getDatabaseConnection();
-
-   $projects  = getProjects($con);
-
-   $users = getUsers($con);
+$users = getUsers($con);
 
 ?>
