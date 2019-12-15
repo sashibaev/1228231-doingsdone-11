@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ], true);  
 
     foreach ($required_fields as $field) {
+
         if (empty($form[$field])) {
         	$errors[$field] = "Не заполнено поле " . $field;
         }
@@ -26,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $user =$res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
 
             if (!count($errors) and $user) {
+
                 if (password_verify($form["password"], $user["password"])) 
                 {
                 	$_SESSION["user"] = $user;
@@ -76,7 +78,6 @@ $layout_content = include_template("layout.php", [
     "title" => "Авторизация пользователя"
 ]);
     
-
 print($layout_content);
 
 ?> 

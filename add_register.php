@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result && empty($errors)) {
             header("Location:/index.php");
-             exit();
+            exit();
         }
     }
 } 
