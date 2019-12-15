@@ -1,25 +1,26 @@
- <?php
-    include_once("helpers.php");
-    include_once("functions.php");
+<?php
 
-    $show_complete_tasks = rand(0, 1);
+include_once("init.php");
 
-    $con = getDatabaseConnection();
+$show_complete_tasks = rand(0, 1);
 
-    $projects  = getProjects($con);
-
-    $users = getUsers($con);
-
-    foreach ($users as $user) {
-        $user_name = $user["name"];
-    }
+$projects = $tasks = "0";
+         
+if (!empty($_SESSION)) {    
+    foreach ($_SESSION as $session) {
+        $user_id = $session["id"];   
+    } 
+    
+    $projects = getProjects($con, $user_id);
 
     if (isset($_GET["id"])) {
         $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
-        $sql = "SELECT id, date_created, status, `name`, link, dt_term, user_id, project_id FROM tasks WHERE project_id = ?";
+        $sql = "SELECT id, date_created, status, `name`, link, dt_term, user_id, project_id FROM tasks WHERE project_id = ? AND user_id = '$user_id'";
+
         if ($statement = mysqli_prepare($con, $sql)) {
             mysqli_stmt_bind_param($statement, "i", $id);
-        } else {
+        } 
+        else {
             gotSqliError($con);
         }
 
@@ -37,33 +38,53 @@
             print "Проект не найден";
             die();
         }
-
-    } else {
-        $sql = "SELECT id, date_created, status, name, link, dt_term, user_id, project_id FROM tasks WHERE user_id = 3";
-        $statement = mysqli_prepare($con, $sql);
+    }
+    else {
+        $sql = "SELECT id, date_created, status, name, link, dt_term, user_id, project_id FROM tasks WHERE user_id = '$user_id'";
+        $statement = mysqli_prepare($con, $sql);        
     }
 
     if ($statement !== false) {
         mysqli_stmt_execute($statement);
         $result = mysqli_stmt_get_result($statement);
         $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    } else {
+    } 
+    else {
         gotSqliError($con);
     }
+}
+    
+$auth_user_header = include_template("auth_user_header.php", []);
 
+$content_auth = include_template("main.php", [
+    "projects" => $projects,
+    "tasks" => $tasks,
+    "show_complete_tasks" => $show_complete_tasks
+]);       
 
-    $page_content = include_template("main.php", [
-        "projects" => $projects,
-        "tasks" => $tasks,
-        "show_complete_tasks" => $show_complete_tasks,
-    ]);
+$anonym_header = include_template("anonym_header.php", []);
 
-    $layout_content = include_template("layout.php", [
-        "content" => $page_content,
-        "user_name" => $user_name,
-        "title" => "Дела в порядке"
-    ]);
+$header = include_template("header.php", [
+    "anonym_header" => $anonym_header,
+    "auth_user_header" => $auth_user_header
+]);
 
-    print($layout_content);
+$content_guest = include_template("guest.php", []);
+   
+$add_task_footer = include_template("add_task_footer.php", []);
+
+$footer = include_template("footer.php", [
+    "add_task_footer" => $add_task_footer
+]);
+
+$layout_content = include_template("layout.php", [
+    "header" => $header,
+    "content_guest" => $content_guest,
+    "content_auth" => $content_auth,
+    "footer" => $footer,
+    "title" => "Дела в порядке"
+]);
+
+print($layout_content);
 
 ?>
