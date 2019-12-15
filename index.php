@@ -56,7 +56,10 @@ if (!empty($_SESSION)) {
     
 $auth_user_header = include_template("auth_user_header.php", []);
 
+$form_search = include_template("form_search.php", []);
+
 $content_auth = include_template("main.php", [
+    "form_search" => $form_search,
     "projects" => $projects,
     "tasks" => $tasks,
     "show_complete_tasks" => $show_complete_tasks
