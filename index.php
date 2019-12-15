@@ -3,6 +3,8 @@
 include_once("init.php");
 
 $show_complete_tasks = rand(0, 1);
+
+$projects = $tasks = "0";
          
 if (!empty($_SESSION)) {    
     foreach ($_SESSION as $session) {
