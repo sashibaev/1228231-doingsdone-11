@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = array_filter($errors);
 
     if (count($errors)) {
-        $page_content = include_template("form_task.php",
+        $content_auth = include_template("form_task.php",
              [
                 "projects" => $projects,
                 "errors" => $errors,
@@ -76,7 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $project_id = $_POST["project_id"];
         $title = $_POST["name"];
         $dt_term = $_POST["date"];
-        $user_id = $_SESSION["id"];
             
         $sqli = "INSERT INTO tasks (date_created, status, name, dt_term, user_id, project_id, link) VALUES (NOW(), 0, '$title', '$dt_term', '$user_id', '$project_id', '$link')";
 

@@ -82,6 +82,7 @@
                             <span class="checkbox__text"><?=htmlspecialchars($val["name"]); ?></span>
                         </label>
                     </td>
+                    <td><a href="<?=$val['link']; ?>" download>скачать файл</a></td>
                     <td class="task__date"><?=$val["dt_term"]; ?></td>
                 </tr>
         <?php endforeach; ?>
