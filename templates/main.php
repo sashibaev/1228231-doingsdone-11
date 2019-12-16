@@ -26,7 +26,8 @@
 
 <main class="content__main">
     <h2 class="content__main-heading">Список задач</h2>
-
+    
+    <!-- Форма поиска задачи по их названию-->
     <?=$form_search; ?>
 
     <div class="tasks-controls">
@@ -49,6 +50,11 @@
     </div>
 
     <table class="tasks">
+        <?php 
+            if (isset($_GET["search"]) && empty($tasks)) {
+               print_r($search_error); 
+            }
+        ?>
 
         <?php foreach ($tasks as $val): ?>
             <?php if ($val["status"] === 1 and $show_complete_tasks === 0) {
@@ -77,7 +83,7 @@
                         </label>
                     </td>
 
-                    <td>
+                    <td class="task__file">
                     <?php if ($val["link"] <> NULL): ?>
                         <a href="<?=$val['link']; ?>" download><img src="../img/download-link.png" alt="Скачать файл"></a>
                     <?php endif; ?>
