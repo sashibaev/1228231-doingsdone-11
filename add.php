@@ -105,7 +105,8 @@ else {
     ]);
 
     $content_auth = include_template("form_task.php", [
-       "content_project" => $content_project
+       "content_project" => $content_project,
+       "projects" => $projects
     ]);
 }
 
