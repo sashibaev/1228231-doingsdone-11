@@ -20,7 +20,7 @@
     }
     
     function getProjects($connection, $user_id) {
-	    $sqli = "SELECT p.id, p.`name`,p.user_id, (SELECT count(id) FROM tasks t WHERE t.project_id = p.id AND t.user_id = '$user_id') as `count` FROM projects p";
+	    $sqli = "SELECT p.id, p.`name`,p.user_id, (SELECT count(id) FROM tasks t WHERE t.project_id = p.id AND t.user_id = '$user_id') as `count` FROM projects p WHERE p.user_id = '$user_id'";
 	    $res = mysqli_query($connection, $sqli);
 
 	    if (!$res) {
