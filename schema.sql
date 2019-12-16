@@ -31,3 +31,12 @@ CREATE TABLE tasks(
     FOREIGN KEY (user_id)  REFERENCES users (id),
     FOREIGN KEY (project_id)  REFERENCES projects (id)
 )
+
+/* SQL инструкцию на создание полнотекстового индекса для поля «название» в таблице задач
+   Добавление индекса FULLTEXT к полю 'name' таблица 'tasks' для организации полноценного поиска*/
+CREATE FULLTEXT INDEX task_search 
+ON tasks(`name`)
+
+/* Поиск названия задачи, которые содержат слово 'просмотр' */
+SELECT name, link, dt_term FROM tasks
+WHERE MATCH(name) AGAINST('просмотр')

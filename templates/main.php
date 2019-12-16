@@ -26,14 +26,9 @@
 
 <main class="content__main">
     <h2 class="content__main-heading">Список задач</h2>
-
-    <form class="search-form" action="" method="post" autocomplete="off">
-        <label>
-            <input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
-        </label>
-
-        <input class="search-form__submit" type="submit" name="" value="Искать">
-    </form>
+    
+    <!-- Форма поиска задачи по их названию-->
+    <?=$form_search; ?>
 
     <div class="tasks-controls">
         <nav class="tasks-switch">
@@ -55,6 +50,11 @@
     </div>
 
     <table class="tasks">
+        <?php 
+            if (isset($_GET["search"]) && empty($tasks)) {
+               print_r($search_error); 
+            }
+        ?>
 
         <?php foreach ($tasks as $val): ?>
             <?php if ($val["status"] === 1 and $show_complete_tasks === 0) {
@@ -82,7 +82,13 @@
                             <span class="checkbox__text"><?=htmlspecialchars($val["name"]); ?></span>
                         </label>
                     </td>
-                    <td><a href="<?=$val['link']; ?>" download>скачать файл</a></td>
+
+                    <td class="task__file">
+                    <?php if ($val["link"] <> NULL): ?>
+                        <a href="<?=$val['link']; ?>" download><img src="../img/download-link.png" alt="Скачать файл"></a>
+                    <?php endif; ?>
+                    </td>
+                    
                     <td class="task__date"><?=$val["dt_term"]; ?></td>
                 </tr>
         <?php endforeach; ?>
