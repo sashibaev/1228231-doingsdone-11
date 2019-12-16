@@ -89,15 +89,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location:/index.php");
             exit();
         }
-
+        
+        $content_project = include_template("content_project.php", [
+        "projects" => $projects
+        ]);
+        
         $content_auth = include_template("form_task.php", [
-            "projects" => $projects
+            "content_project" => $content_project
         ]); 
     }
 } 
 else {
+    $content_project = include_template("content_project.php", [
+        "projects" => $projects
+    ]);
+
     $content_auth = include_template("form_task.php", [
-    "projects" => $projects
+       "content_project" => $content_project
     ]);
 }
 

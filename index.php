@@ -64,7 +64,7 @@ if (isset($_GET["search"])) {
     $search = trim($search);
     //поиск задач, если был задан поисковый запрос
     if ($search) {
-        $sql = "SELECT status, name, link, dt_term FROM tasks WHERE MATCH (`name`) AGAINST('$search')";
+        $sql = "SELECT status, `name`, link, dt_term FROM tasks WHERE MATCH (`name`) AGAINST('$search')";
 
         //$stmt = db_get_prepare_stmt($con, $sql [$search]);
         $stmt = mysqli_prepare($con, $sql);
@@ -85,9 +85,13 @@ $auth_user_header = include_template("auth_user_header.php", []);
 
 $form_search = include_template("form_search.php", []);
 
+$content_project = include_template("content_project.php", [
+        "projects" => $projects
+        ]);
+
 $content_auth = include_template("main.php", [
         "form_search" => $form_search,
-        "projects" => $projects,
+        "content_project" => $content_project,
         "tasks" => $tasks,
         "show_complete_tasks" => $show_complete_tasks,
         "search_error" => $search_error

@@ -31,14 +31,14 @@
 	}
 
     function getUsers($connection) {
-    	$sqli = "SELECT id, `name`, password, email FROM users";
-    	$res = mysqli_query($connection, $sqli);
+        $sqli = "SELECT id, `name`, password, email FROM users";
+        $res = mysqli_query($connection, $sqli);
 
-    	if (!$res) {
-    		gotSqliError($connection);
-    	}
+        if (!$res) {
+            gotSqliError($connection);
+        }
 
-    	return mysqli_fetch_all($res, MYSQLI_ASSOC);
+        return mysqli_fetch_all($res, MYSQLI_ASSOC);
     }
 
     // задание 3 урок 2  работаем с датой

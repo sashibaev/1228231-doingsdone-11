@@ -23,7 +23,7 @@
                   
                     <?=$header; ?>
 
-                    <div class="content"><?=$content_guest; ?></div>
+                    <?=$content_guest; ?>
                 </div>      
                       
             <?php else: ?>         
@@ -31,7 +31,7 @@
 
                     <?=$header; ?>
 
-                    <div class="content"><?=$content_auth; ?></div> 
+                    <?=$content_auth; ?> 
                 </div>
             <?php endif; ?>                            
     </div>
