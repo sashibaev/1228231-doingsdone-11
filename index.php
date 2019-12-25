@@ -4,7 +4,7 @@ include_once("init.php");
 
 $show_complete_tasks = rand(0, 1);
 
-$projects = $tasks = "0";
+$projects = $tasks = $checkbox_task = "0";
 
 $search_error = "";
          
@@ -66,7 +66,6 @@ if (isset($_GET["search"])) {
     if ($search) {
         $sql = "SELECT status, `name`, link, dt_term FROM tasks WHERE MATCH (`name`) AGAINST('$search')";
 
-        //$stmt = db_get_prepare_stmt($con, $sql [$search]);
         $stmt = mysqli_prepare($con, $sql);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
@@ -79,7 +78,27 @@ if (isset($_GET["search"])) {
     else {
         gotSqliError($con);
     }
-} 
+}
+/*
+if (isset($_GET["checkbox_task"])) {
+    $checkbox_task = $_GET["checkbox_task"];
+
+    $status = filter_input(INPUT_GET, "checkbox_task", FILTER_DEFAULT);
+    $checkbox_task = ($status === 0) ? "1" : "0";
+
+    $id = $_GET["checkbox_task"];
+    $sql = "SELECT status, `name`, lFROM tasks WHERE MATCH (`name`) AGAINST('$id')";
+
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
+
+
+ } 
+*/
 
 $auth_user_header = include_template("auth_user_header.php", []);
 
@@ -90,6 +109,7 @@ $content_project = include_template("content_project.php", [
         ]);
 
 $content_auth = include_template("main.php", [
+        "checkbox_task" => $checkbox_task,
         "form_search" => $form_search,
         "content_project" => $content_project,
         "tasks" => $tasks,

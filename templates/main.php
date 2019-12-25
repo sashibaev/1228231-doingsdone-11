@@ -9,7 +9,9 @@
         <?=$form_search; ?>
 
         <div class="tasks-controls">
+
             <nav class="tasks-switch">
+
                 <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
                 <a href="/" class="tasks-switch__item">Повестка дня</a>
                 <a href="/" class="tasks-switch__item">Завтра</a>
@@ -52,18 +54,19 @@
                     <tr class="task--important">
                 <?php endif; ?>
 
-                        <td class="task__select">
-                            <label class="checkbox task__checkbox">
-                                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?php if ($show_complete_tasks === 1 AND $val["status"] === 1): ?>
-                                   checked
-                                <?php endif; ?>>
-                                <span class="checkbox__text"><?=htmlspecialchars($val["name"]); ?></span>
-                            </label>
-                        </td>
+                            <td class="task__select">
+                                <label class="checkbox task__checkbox">
+
+                                    <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" name="checkbox_task"value="<?=($val['id']); ?>" <?php if ($show_complete_tasks === 1 AND $val["status"] === 1): ?>
+                                        checked
+                                    <?php endif; ?>>
+                                    <span class="checkbox__text"><?=htmlspecialchars($val["name"]); ?></span>
+                                </label>
+                            </td>
 
                         <td class="task__file">
                         <?php if ($val["link"] <> NULL): ?>
-                            <a href="<?=$val['link']; ?>" download><img src="../img/download-link.png" alt="Скачать файл"></a>
+                            <a href="<?=$val['link']; ?>" download><img src="../img/download-link.png" alt="Скачать файл"> Файл</a>
                         <?php endif; ?>
                         </td>
                         
